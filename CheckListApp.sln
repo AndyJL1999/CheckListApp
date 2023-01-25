@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CheckListApi", "CheckListApi\CheckListApi.csproj", "{167D6AFE-D52D-48DA-8FED-EBA8572280BB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CheckListWPF", "CheckListWPF\CheckListWPF.csproj", "{48939A67-6312-412D-9652-53D4DCB70829}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{167D6AFE-D52D-48DA-8FED-EBA8572280BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{167D6AFE-D52D-48DA-8FED-EBA8572280BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{167D6AFE-D52D-48DA-8FED-EBA8572280BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{167D6AFE-D52D-48DA-8FED-EBA8572280BB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{48939A67-6312-412D-9652-53D4DCB70829}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{48939A67-6312-412D-9652-53D4DCB70829}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{48939A67-6312-412D-9652-53D4DCB70829}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{48939A67-6312-412D-9652-53D4DCB70829}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
