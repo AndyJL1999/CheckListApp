@@ -1,0 +1,35 @@
+﻿<UserControl x:Class="CheckListWPF.MVVM.View.UserControls.TaskBoardControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:CheckListWPF.MVVM.View.UserControls"
+             mc:Ignorable="d">
+
+    <Border CornerRadius="10" Margin="20" Background="LightGray" 
+            BorderThickness="0">
+        
+        <Grid Height="auto" Width="250">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+
+            <TextBlock Text="TaskBoard" FontSize="21" Margin="10,5"/>
+
+            <ListView Grid.Row="1" Margin="5" Background="Transparent"
+                      ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                      BorderThickness="0">
+                
+                <local:TaskControl/>
+            </ListView>
+
+            <Button Content="➕" Grid.Row="2" HorizontalAlignment="Left"
+                    VerticalAlignment="Bottom" Margin="10,5" Background="Transparent"
+                    FontSize="18" BorderThickness="0"/>
+
+        </Grid>
+        
+    </Border>
+</UserControl>
