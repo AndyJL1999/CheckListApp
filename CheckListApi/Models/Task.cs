@@ -4,7 +4,13 @@ namespace CheckListApi.Models
 {
     public class Task
     {
+        [Required]
         public int Id { get; set; }
+
+        [Required]
+        public int BoardId { get; set; }
+        public TaskBoard Board { get; set; }
+
 
         [MaxLength(25)]
         public string Title { get; set; }
