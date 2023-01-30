@@ -7,6 +7,9 @@ namespace CheckListApi.Models
         [Required]
         public int Id { get; set; }
 
+        [MaxLength(50)]
+        public string Username { get; set; }
+
         [MaxLength(250)]
         public string Email { get; set; }
 
