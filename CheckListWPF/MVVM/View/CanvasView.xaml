@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:CheckListWPF.MVVM.View"
              xmlns:uc="clr-namespace:CheckListWPF.MVVM.View.UserControls"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="600" d:DesignWidth="800">
 
     
     <Grid Background="CadetBlue">
@@ -33,6 +33,14 @@
         <TextBlock Text="CheckList" Grid.Column="1" Grid.ColumnSpan="2"
                    HorizontalAlignment="Center" VerticalAlignment="Center"
                    FontSize="24" FontFamily="Impact" Foreground="LightSteelBlue"/>
+
+        <Button Content="Account 🙍‍" Grid.Column="3"
+                FontSize="21" Margin="15,0"
+                FontFamily="Impact"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Center"
+                Background="Transparent"
+                Foreground="White" BorderThickness="0"/>
 
         <TextBlock Text="Your Canvas" Grid.Row="1" FontSize="26" Margin="15,0"
                    HorizontalAlignment="Left"

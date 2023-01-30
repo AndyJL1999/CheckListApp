@@ -12,6 +12,18 @@
                 <view:CanvasView/>
             </DataTemplate>
 
+            <DataTemplate DataType="{x:Type viewModel:StartUpViewModel}">
+                <view:StartUpView/>
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type viewModel:AccountViewModel}">
+                <view:AccountView/>
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type viewModel:EditAccountViewModel}">
+                <view:EditAccountView/>
+            </DataTemplate>
+
         </ResourceDictionary>
     </Application.Resources>
 </Application>

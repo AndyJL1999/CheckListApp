@@ -29,7 +29,8 @@
                     VerticalAlignment="Center"
                     Background="Transparent" BorderThickness="0"/>
 
-            <ListView Grid.Row="1" Grid.ColumnSpan="2" Margin="5" Background="Transparent"
+            <ListView Grid.Row="1" Grid.ColumnSpan="2" Margin="5"
+                      Background="Transparent"
                       ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                       BorderThickness="0">
                 
