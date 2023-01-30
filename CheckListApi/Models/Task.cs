@@ -4,7 +4,6 @@ namespace CheckListApi.Models
 {
     public class Task
     {
-        [Required]
         public int Id { get; set; }
 
         [Required]

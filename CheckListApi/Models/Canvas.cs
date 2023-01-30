@@ -2,17 +2,16 @@
 
 namespace CheckListApi.Models
 {
-    public class TaskBoard
+    public class Canvas
     {
         public int Id { get; set; }
 
         [Required]
-        public int CanvasId { get; set; }
-        public Canvas Canvas { get; set; }
-
+        public int UserId { get; set; }
+        public User User { get; set; }
 
         [MaxLength(25)]
         public string Title { get; set; }
-        public List<Task> Tasks { get; set; }
+        public List<TaskBoard> TaskBoards { get; set; }
     }
 }

@@ -4,10 +4,9 @@ namespace CheckListApi.Models
 {
     public class User
     {
-        [Required]
         public int Id { get; set; }
 
-        [MaxLength(50)]
+        [MaxLength(25)]
         public string Username { get; set; }
 
         [MaxLength(250)]
@@ -16,6 +15,6 @@ namespace CheckListApi.Models
         public byte[] PasswordHash { get; set; }
         public byte[] PasswordSalt { get; set; }
 
-        public List<TaskBoard> TaskBoards { get; set; }
+        public List<Canvas> CanvasList { get; set; }
     }
 }

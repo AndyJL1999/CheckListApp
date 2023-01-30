@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CheckListApi.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20230129234142_InitialCreate")]
+    [Migration("20230130200249_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -23,6 +23,29 @@ namespace CheckListApi.Data.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("CheckListApi.Models.Canvas", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(25)
+                        .HasColumnType("nvarchar(25)");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Canvas");
+                });
 
             modelBuilder.Entity("CheckListApi.Models.Task", b =>
                 {
@@ -66,17 +89,17 @@ namespace CheckListApi.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int>("CanvasId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasMaxLength(25)
                         .HasColumnType("nvarchar(25)");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("CanvasId");
 
                     b.ToTable("TaskBoard");
                 });
@@ -104,12 +127,23 @@ namespace CheckListApi.Data.Migrations
 
                     b.Property<string>("Username")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasMaxLength(25)
+                        .HasColumnType("nvarchar(25)");
 
                     b.HasKey("Id");
 
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("CheckListApi.Models.Canvas", b =>
+                {
+                    b.HasOne("CheckListApi.Models.User", "User")
+                        .WithMany("CanvasList")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("CheckListApi.Models.Task", b =>
@@ -125,13 +159,18 @@ namespace CheckListApi.Data.Migrations
 
             modelBuilder.Entity("CheckListApi.Models.TaskBoard", b =>
                 {
-                    b.HasOne("CheckListApi.Models.User", "User")
+                    b.HasOne("CheckListApi.Models.Canvas", "Canvas")
                         .WithMany("TaskBoards")
-                        .HasForeignKey("UserId")
+                        .HasForeignKey("CanvasId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("User");
+                    b.Navigation("Canvas");
+                });
+
+            modelBuilder.Entity("CheckListApi.Models.Canvas", b =>
+                {
+                    b.Navigation("TaskBoards");
                 });
 
             modelBuilder.Entity("CheckListApi.Models.TaskBoard", b =>
@@ -141,7 +180,7 @@ namespace CheckListApi.Data.Migrations
 
             modelBuilder.Entity("CheckListApi.Models.User", b =>
                 {
-                    b.Navigation("TaskBoards");
+                    b.Navigation("CanvasList");
                 });
 #pragma warning restore 612, 618
         }

@@ -16,7 +16,7 @@ namespace CheckListApi.Data.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Username = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Username = table.Column<string>(type: "nvarchar(25)", maxLength: 25, nullable: false),
                     Email = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: false),
                     PasswordHash = table.Column<byte[]>(type: "varbinary(max)", nullable: false),
                     PasswordSalt = table.Column<byte[]>(type: "varbinary(max)", nullable: false)
@@ -27,7 +27,7 @@ namespace CheckListApi.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "TaskBoard",
+                name: "Canvas",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -37,11 +37,31 @@ namespace CheckListApi.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_TaskBoard", x => x.Id);
+                    table.PrimaryKey("PK_Canvas", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_TaskBoard_Users_UserId",
+                        name: "FK_Canvas_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "TaskBoard",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CanvasId = table.Column<int>(type: "int", nullable: false),
+                    Title = table.Column<string>(type: "nvarchar(25)", maxLength: 25, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TaskBoard", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_TaskBoard_Canvas_CanvasId",
+                        column: x => x.CanvasId,
+                        principalTable: "Canvas",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -70,14 +90,19 @@ namespace CheckListApi.Data.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_Canvas_UserId",
+                table: "Canvas",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Task_BoardId",
                 table: "Task",
                 column: "BoardId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_TaskBoard_UserId",
+                name: "IX_TaskBoard_CanvasId",
                 table: "TaskBoard",
-                column: "UserId");
+                column: "CanvasId");
         }
 
         /// <inheritdoc />
@@ -88,6 +113,9 @@ namespace CheckListApi.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "TaskBoard");
+
+            migrationBuilder.DropTable(
+                name: "Canvas");
 
             migrationBuilder.DropTable(
                 name: "Users");
