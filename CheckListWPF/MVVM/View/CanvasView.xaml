@@ -40,7 +40,8 @@
                 HorizontalAlignment="Right"
                 VerticalAlignment="Center"
                 Background="Transparent"
-                Foreground="White" BorderThickness="0"/>
+                Foreground="White" BorderThickness="0"
+                Command="{Binding OpenAccountCommand}"/>
 
         <TextBlock Text="Your Canvas" Grid.Row="1" FontSize="26" Margin="15,0"
                    HorizontalAlignment="Left"

@@ -55,7 +55,7 @@
                 Height="35" Width="125"
                 Background="Transparent" Foreground="White"
                 BorderThickness="0"
-                Command="{Binding OpenWindowCommand}">
+                Command="{Binding OpenCanvasCommand}">
             
             <Button.Content>
                 <TextBlock Text="Edit Account" 
@@ -65,7 +65,7 @@
         </Button>
 
 
-        <StackPanel Grid.Row="2" Grid.ColumnSpan="4" VerticalAlignment="Top">
+        <StackPanel Grid.Row="2" VerticalAlignment="Top">
             
             <TextBlock Text="Email" Margin="15,5"
                        FontFamily="Impact" FontSize="21"
@@ -74,12 +74,13 @@
                        FontFamily="Impact" FontSize="18"
                        Foreground="White"/>
 
-            <TextBlock Text="Password" Margin="15,5"
+            <TextBlock Text="Password" Margin="15,5,15,0"
                        FontFamily="Impact" FontSize="21"
                        Foreground="White"/>
-            <TextBlock Text="********" Margin="15,0"
-                       FontFamily="Impact" FontSize="18"
-                       Foreground="White"/>
+            <PasswordBox Password="12345678" Margin="15,0"
+                         FontFamily="Impact" FontSize="18"
+                         Foreground="White" Background="Transparent"
+                         BorderThickness="0" />
 
         </StackPanel>
 
@@ -102,7 +103,8 @@
             <Button Content="➕" Background="Transparent" Margin="10,0"
                     Foreground="RoyalBlue" FontSize="24" BorderThickness="0"
                     HorizontalAlignment="Right" VerticalAlignment="Center"
-                    Height="35" Width="35" Grid.Row="1" Grid.Column="3"/>
+                    Height="35" Width="35" Grid.Row="1" Grid.Column="3"
+                    Command="{Binding OpenAddCanvasCommand}"/>
 
         </StackPanel>
 

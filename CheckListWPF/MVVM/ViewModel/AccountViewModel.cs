@@ -1,4 +1,5 @@
 ﻿using CheckListWPF.Resources;
+using CheckListWPF.Resources.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -11,30 +12,76 @@ using System.Windows.Media;
 
 namespace CheckListWPF.MVVM.ViewModel
 {
-    public class AccountViewModel : ObservableObject
+    public class AccountViewModel : ObservableObject, IPageViewModel
     {
-        private ICommand _openWindowCommand;
+        private ICommand _openEditCommand;
+        private ICommand _openAddCanvasCommand;
+        private ICommand _openCanvasCommand;
 
-        public AccountViewModel()
+        public event EventHandler<EventArgs<string>>? ViewChanged;
+
+        public AccountViewModel(string pageIndex = "1")
         {
-
+            PageId = pageIndex;
+            PageName = "AccountView";
         }
 
-        public ICommand OpenWindowCommand 
+        public string PageId { get; set; }
+        public string PageName { get; set; }
+
+        public ICommand OpenEditCommand 
         {
             get
             {
-                if(_openWindowCommand is null)
+                if(_openEditCommand is null)
                 {
-                    _openWindowCommand = new RelayCommand(p => OpenWindow(), p => true);
+                    _openEditCommand = new RelayCommand(p => OpenEditAccount(), p => true);
                 }
 
-                return _openWindowCommand;
+                return _openEditCommand;
             }
 
         }
 
-        public void OpenWindow()
+        public ICommand OpenAddCanvasCommand
+        {
+            get
+            {
+                if (_openAddCanvasCommand is null)
+                {
+                    _openAddCanvasCommand = new RelayCommand(p => OpenAddCanvas(), p => true);
+                }
+
+                return _openAddCanvasCommand;
+            }
+
+        }
+
+        public ICommand OpenCanvasCommand
+        {
+            get
+            {
+                if (_openCanvasCommand is null)
+                {
+                    _openCanvasCommand = new RelayCommand(p => { ViewChanged?.Invoke(this, new EventArgs<string>("2")); }, p => true);
+                }
+
+                return _openCanvasCommand;
+            }
+        }
+
+
+        private void OpenAddCanvas()
+        {
+            OpenWindow(new CreateCanvasViewModel());
+        }
+
+        private void OpenEditAccount()
+        {
+            OpenWindow(new EditAccountViewModel());
+        }
+
+        private void OpenWindow(ObservableObject viewModel)
         {
             if (App.Current.MainWindow.OwnedWindows.Count == 0)
             {
@@ -43,11 +90,9 @@ namespace CheckListWPF.MVVM.ViewModel
                 w.ResizeMode = ResizeMode.NoResize;
                 w.AllowsTransparency = true;
                 w.Background = new SolidColorBrush(Colors.Transparent);
-                w.MaxHeight = 300;
-                w.MaxWidth = 300;
                 w.Owner = App.Current.MainWindow;
                 w.WindowStartupLocation = WindowStartupLocation.CenterOwner;
-                w.Content = new EditAccountViewModel();
+                w.Content = viewModel;
                 w.ShowDialog();
             }
         }

@@ -3,8 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:CheckListWPF"
              xmlns:viewModel="clr-namespace:CheckListWPF.MVVM.ViewModel"
-             xmlns:view="clr-namespace:CheckListWPF.MVVM.View"
-             StartupUri="MainWindow.xaml">
+             xmlns:view="clr-namespace:CheckListWPF.MVVM.View">
     <Application.Resources>
         <ResourceDictionary>
 
@@ -22,6 +21,10 @@
 
             <DataTemplate DataType="{x:Type viewModel:EditAccountViewModel}">
                 <view:EditAccountView/>
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type viewModel:CreateCanvasViewModel}">
+                <view:CreateCanvasView/>
             </DataTemplate>
 
         </ResourceDictionary>
