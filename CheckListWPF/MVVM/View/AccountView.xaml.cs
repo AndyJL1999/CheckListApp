@@ -24,5 +24,10 @@ namespace CheckListWPF.MVVM.View
         {
             InitializeComponent();
         }
+
+        private void ListItemControl_PreviewRightMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            e.Handled = true;
+        }
     }
 }

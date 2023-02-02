@@ -1,7 +1,12 @@
-﻿using CheckListWPF.Resources;
+﻿using AutoMapper;
+using CheckListWPF.MVVM.Model;
+using CheckListWPF.Resources;
+using CheckListWPF.Resources.EventAggregators;
 using CheckListWPF.Resources.Interfaces;
+using Prism.Events;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -16,18 +21,72 @@ namespace CheckListWPF.MVVM.ViewModel
     {
         private ICommand _openEditCommand;
         private ICommand _openAddCanvasCommand;
-        private ICommand _openCanvasCommand;
+        private ObservableCollection<CanvasDisplayModel> _canvasList;
+        private CanvasDisplayModel _selectedCanvas;
+        private readonly IApiHelper _apiHelper;
+        private readonly ICheckListEndpoint _checkListEndpoint;
+        private readonly IMapper _mapper;
+        private readonly IEventAggregator _eventAggregator;
+        private string _userWelcome;
 
         public event EventHandler<EventArgs<string>>? ViewChanged;
 
-        public AccountViewModel(string pageIndex = "1")
+        public AccountViewModel(IApiHelper apiHelper, ICheckListEndpoint checkListEndpoint, IMapper mapper,  
+            IEventAggregator eventAggregator, string pageIndex = "1")
         {
+            _apiHelper = apiHelper;
+            _checkListEndpoint = checkListEndpoint;
+            _mapper = mapper;
+            _eventAggregator = eventAggregator;
+
             PageId = pageIndex;
             PageName = "AccountView";
+
+            _eventAggregator.GetEvent<LogOnEvent>().Subscribe(() => {
+
+                _userWelcome = _apiHelper.LoggedInUser.Username;
+                SetCanvasList();
+            });
+
+            _eventAggregator.GetEvent<ResetSelectedCanvasEvent>().Subscribe(() => {
+
+                SelectedCanvas = null;
+            });
         }
 
         public string PageId { get; set; }
         public string PageName { get; set; }
+
+        public string UserWelcome 
+        { 
+            get { return $"Welcome {_userWelcome}"; }
+            set
+            {
+                _userWelcome = value;
+                OnPropertyChanged(nameof(UserWelcome));
+            }
+        }
+
+        public ObservableCollection<CanvasDisplayModel> CanvasList 
+        {
+            get { return _canvasList; }
+            set
+            {
+                _canvasList = value;
+                OnPropertyChanged(nameof(CanvasList));
+            } 
+        }
+
+        public CanvasDisplayModel? SelectedCanvas
+        {
+            get { return _selectedCanvas; }
+            set
+            {
+                _selectedCanvas = value;
+                OnPropertyChanged(nameof(SelectedCanvas));
+                ViewChanged?.Invoke(this, new EventArgs<string>("2"));
+            }
+        }
 
         public ICommand OpenEditCommand 
         {
@@ -57,20 +116,6 @@ namespace CheckListWPF.MVVM.ViewModel
 
         }
 
-        public ICommand OpenCanvasCommand
-        {
-            get
-            {
-                if (_openCanvasCommand is null)
-                {
-                    _openCanvasCommand = new RelayCommand(p => { ViewChanged?.Invoke(this, new EventArgs<string>("2")); }, p => true);
-                }
-
-                return _openCanvasCommand;
-            }
-        }
-
-
         private void OpenAddCanvas()
         {
             OpenWindow(new CreateCanvasViewModel());
@@ -95,6 +140,14 @@ namespace CheckListWPF.MVVM.ViewModel
                 w.Content = viewModel;
                 w.ShowDialog();
             }
+        }
+
+        private async void SetCanvasList()
+        {
+            var payload = await _checkListEndpoint.GetUserCanvasList();
+            var canvasList = _mapper.Map<IEnumerable<CanvasDisplayModel>>(payload);
+
+            CanvasList = new ObservableCollection<CanvasDisplayModel>(canvasList);
         }
     }
 }

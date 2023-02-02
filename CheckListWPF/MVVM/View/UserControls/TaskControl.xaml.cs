@@ -20,6 +20,7 @@ namespace CheckListWPF.MVVM.View.UserControls
     /// </summary>
     public partial class TaskControl : UserControl
     {
+
         public TaskControl()
         {
             InitializeComponent();

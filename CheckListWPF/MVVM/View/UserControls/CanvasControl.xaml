@@ -1,0 +1,25 @@
+﻿<UserControl x:Class="CheckListWPF.MVVM.View.UserControls.CanvasControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:CheckListWPF.MVVM.View.UserControls"
+             mc:Ignorable="d" 
+             MinHeight="100" MinWidth="650" MaxHeight="200">
+
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <StackPanel>
+            <TextBlock FontSize="24" FontWeight="Bold" 
+                       Text="{Binding Title}" Margin="10,0,0,0" 
+                       HorizontalAlignment="Left"/>
+
+            <TextBlock FontSize="18" Margin="10,10" 
+                       Text="Number of Boards"/>
+        </StackPanel>
+    </Grid>
+</UserControl>

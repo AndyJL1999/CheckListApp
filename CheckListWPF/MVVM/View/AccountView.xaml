@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:CheckListWPF.MVVM.View"
+             xmlns:uc="clr-namespace:CheckListWPF.MVVM.View.UserControls"
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="800">
     
@@ -42,7 +43,7 @@
                 Background="Transparent"
                 Foreground="White" BorderThickness="0"/>
 
-        <TextBlock Text="Welcome User" Grid.Row="1" Grid.ColumnSpan="3" 
+        <TextBlock Text="{Binding UserWelcome}" Grid.Row="1" Grid.ColumnSpan="3" 
                    FontSize="26" Margin="15,0"
                    HorizontalAlignment="Left"
                    VerticalAlignment="Center" 
@@ -54,8 +55,7 @@
                 VerticalAlignment="Center"
                 Height="35" Width="125"
                 Background="Transparent" Foreground="White"
-                BorderThickness="0"
-                Command="{Binding OpenCanvasCommand}">
+                BorderThickness="0">
             
             <Button.Content>
                 <TextBlock Text="Edit Account" 
@@ -108,91 +108,18 @@
 
         </StackPanel>
 
-        <ListView Margin="15,0,15,15" ScrollViewer.VerticalScrollBarVisibility="Auto"
-                  Grid.Row="4" Grid.ColumnSpan="4">
+        <ListView ItemsSource="{Binding CanvasList}"
+                  SelectedValue="{Binding SelectedCanvas, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                  Margin="15,0,15,15" ScrollViewer.VerticalScrollBarVisibility="Auto"
+                  Grid.Row="4" Grid.ColumnSpan="4"
+                  PreviewMouseRightButtonDown="ListItemControl_PreviewRightMouseDown">
+
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <uc:CanvasControl Canvas="{Binding}"/>
+                </DataTemplate>
+            </ListView.ItemTemplate>
             
-            
-            <ListViewItem>
-                
-                <StackPanel>
-                    <TextBlock Text="Canvas"/>
-                    <TextBlock Text="Canvas"/>
-                    <TextBlock Text="Canvas"/>
-                    <TextBlock Text="Canvas"/>
-                </StackPanel>
-            </ListViewItem>
-            <ListViewItem>
-                <StackPanel>
-                    <TextBlock Text="Canvas"/>
-                    <TextBlock Text="Canvas"/>
-                    <TextBlock Text="Canvas"/>
-                    <TextBlock Text="Canvas"/>
-                </StackPanel>
-            </ListViewItem>
-            <ListViewItem>
-                <StackPanel>
-                    <TextBlock Text="Canvas"/>
-                    <TextBlock Text="Canvas"/>
-                    <TextBlock Text="Canvas"/>
-                    <TextBlock Text="Canvas"/>
-                </StackPanel>
-            </ListViewItem>
-            <ListViewItem>
-                <StackPanel>
-                    <TextBlock Text="Canvas"/>
-                    <TextBlock Text="Canvas"/>
-                    <TextBlock Text="Canvas"/>
-                    <TextBlock Text="Canvas"/>
-                </StackPanel>
-            </ListViewItem>
-            <ListViewItem>
-                <StackPanel>
-                    <TextBlock Text="Canvas"/>
-                    <TextBlock Text="Canvas"/>
-                    <TextBlock Text="Canvas"/>
-                    <TextBlock Text="Canvas"/>
-                </StackPanel>
-            </ListViewItem>
-            <ListViewItem>
-                <StackPanel>
-                    <TextBlock Text="Canvas"/>
-                    <TextBlock Text="Canvas"/>
-                    <TextBlock Text="Canvas"/>
-                    <TextBlock Text="Canvas"/>
-                </StackPanel>
-            </ListViewItem>
-            <ListViewItem>
-                <StackPanel>
-                    <TextBlock Text="Canvas"/>
-                    <TextBlock Text="Canvas"/>
-                    <TextBlock Text="Canvas"/>
-                    <TextBlock Text="Canvas"/>
-                </StackPanel>
-            </ListViewItem>
-            <ListViewItem>
-                <StackPanel>
-                    <TextBlock Text="Canvas"/>
-                    <TextBlock Text="Canvas"/>
-                    <TextBlock Text="Canvas"/>
-                    <TextBlock Text="Canvas"/>
-                </StackPanel>
-            </ListViewItem>
-            <ListViewItem>
-                <StackPanel>
-                    <TextBlock Text="Canvas"/>
-                    <TextBlock Text="Canvas"/>
-                    <TextBlock Text="Canvas"/>
-                    <TextBlock Text="Canvas"/>
-                </StackPanel>
-            </ListViewItem>
-            <ListViewItem>
-                <StackPanel>
-                    <TextBlock Text="Canvas"/>
-                    <TextBlock Text="Canvas"/>
-                    <TextBlock Text="Canvas"/>
-                    <TextBlock Text="Canvas"/>
-                </StackPanel>
-            </ListViewItem>
         </ListView>
 
     </Grid> 

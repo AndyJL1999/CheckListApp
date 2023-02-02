@@ -1,4 +1,8 @@
-﻿using CheckListWPF.MVVM.ViewModel;
+﻿using AutoMapper;
+using CheckListWPF.MVVM.ViewModel;
+using CheckListWPF.Resources;
+using CheckListWPF.Resources.Interfaces;
+using Prism.Events;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,9 +25,22 @@ namespace CheckListWPF
     /// </summary>
     public partial class MainWindow : Window
     {
-        public MainWindow()
+        private readonly IApiHelper _apiHelper;
+        private readonly ICheckListEndpoint _checkListEndpoint;
+        private readonly IMapper _mapper;
+        private readonly IEventAggregator _eventAggregator;
+
+        public MainWindow(IApiHelper apiHelper, ICheckListEndpoint checkListEndpoint, IMapper mapper, 
+            IEventAggregator eventAggregator)
         {
             InitializeComponent();
+
+            _apiHelper = apiHelper;
+            _checkListEndpoint = checkListEndpoint;
+            _mapper = mapper;
+            _eventAggregator = eventAggregator;
+
+            DataContext = new MainViewModel(new DataModel{ Data = "Data: " }, _apiHelper, _checkListEndpoint, _mapper, _eventAggregator);
         }
     }
 }

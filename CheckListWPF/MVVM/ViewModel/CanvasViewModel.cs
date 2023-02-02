@@ -1,5 +1,7 @@
 ﻿using CheckListWPF.Resources;
+using CheckListWPF.Resources.EventAggregators;
 using CheckListWPF.Resources.Interfaces;
+using Prism.Events;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,11 +14,14 @@ namespace CheckListWPF.MVVM.ViewModel
     public class CanvasViewModel : ObservableObject, IPageViewModel
     {
         private ICommand _openAccountCommand;
+        private IEventAggregator _eventAggregator;
 
         public event EventHandler<EventArgs<string>>? ViewChanged;
 
-        public CanvasViewModel(string pageIndex = "2")
+        public CanvasViewModel(IEventAggregator eventAggregator, string pageIndex = "2")
         {
+            _eventAggregator = eventAggregator;
+
             PageId = pageIndex;
             PageName = "CanvasView";
         }
@@ -30,7 +35,12 @@ namespace CheckListWPF.MVVM.ViewModel
             {
                 if (_openAccountCommand is null)
                 {
-                    _openAccountCommand = new RelayCommand(p => { ViewChanged?.Invoke(this, new EventArgs<string>("1")); }, p => true);
+                    _openAccountCommand = new RelayCommand(p => 
+                    {
+                        _eventAggregator.GetEvent<ResetSelectedCanvasEvent>().Publish();
+                        ViewChanged?.Invoke(this, new EventArgs<string>("1")); 
+                    }, 
+                    p => true);
                 }
 
                 return _openAccountCommand;

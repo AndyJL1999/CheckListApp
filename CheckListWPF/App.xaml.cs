@@ -1,8 +1,13 @@
-﻿using CheckListWPF.MVVM.ViewModel;
+﻿using AutoMapper;
+using CheckListApi.Models;
+using CheckListWPF.MVVM.Model;
+using CheckListWPF.MVVM.ViewModel;
 using CheckListWPF.Resources;
+using CheckListWPF.Resources.Helpers;
 using CheckListWPF.Resources.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Prism.Events;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -23,8 +28,22 @@ namespace CheckListWPF
         {
             AppHost = Host.CreateDefaultBuilder().ConfigureServices((hostContext, services) =>
             {
+                var config = new MapperConfiguration(myConfig =>
+                {
+                    myConfig.CreateMap<Canvas, CanvasDisplayModel>();
+                    myConfig.CreateMap<CanvasDisplayModel, Canvas>();
+                });
+
+                var mapper = config.CreateMapper();
+
+                services.AddSingleton(mapper);
                 services.AddSingleton<MainWindow>();
+                services.AddSingleton<IEventAggregator, EventAggregator>();
+                services.AddSingleton<ILoggedInUser, LoggedInUser>();
+                services.AddSingleton<IApiHelper, ApiHelper>();
                 services.AddTransient<IDataModel, DataModel>();
+                services.AddScoped<ICheckListEndpoint, CheckListEndpoint>();
+
             }).Build();
         }
 
@@ -34,7 +53,6 @@ namespace CheckListWPF
         {
             await AppHost!.StartAsync();
             var startupForm = AppHost.Services.GetRequiredService<MainWindow>();
-            startupForm!.DataContext = new MainViewModel(new DataModel { Data = "Data: " });
             startupForm!.Show();
             base.OnStartup(e);
         }
