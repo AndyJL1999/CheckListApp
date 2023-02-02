@@ -2,7 +2,7 @@
 
 namespace CheckListApi.Models
 {
-    public class Task
+    public class MyTask
     {
         public int Id { get; set; }
 

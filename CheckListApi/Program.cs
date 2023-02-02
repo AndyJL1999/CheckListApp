@@ -38,6 +38,9 @@ var config = new MapperConfiguration(myConfig =>
 {
     myConfig.CreateMap<UserDto, User>();
     myConfig.CreateMap<RegisterDto, User>();
+    myConfig.CreateMap<AddCanvasDto, Canvas>();
+    myConfig.CreateMap<AddTaskBoardDto, TaskBoard>();
+    myConfig.CreateMap<AddTaskDto, CheckListApi.Models.MyTask>();
 });
 
 var mapper = config.CreateMapper();
@@ -45,6 +48,8 @@ var mapper = config.CreateMapper();
 builder.Services.AddSingleton(mapper);
 
 builder.Services.AddScoped<IAuthRepository, AuthRepository>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<ICheckListRepository, CheckListRepository>();
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>

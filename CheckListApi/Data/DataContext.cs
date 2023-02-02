@@ -11,5 +11,10 @@ namespace CheckListApi.Data
         }
 
         public DbSet<User> Users { get; set; }
+        public DbSet<Canvas> CanvasList { get; set; }
+        public DbSet<TaskBoard> TaskBoards { get; set; }
+        public DbSet<Models.MyTask> Tasks { get; set; }
+
+
     }
 }

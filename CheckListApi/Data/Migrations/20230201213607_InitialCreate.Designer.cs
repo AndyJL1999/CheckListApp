@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CheckListApi.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20230130200249_InitialCreate")]
+    [Migration("20230201213607_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -44,10 +44,10 @@ namespace CheckListApi.Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Canvas");
+                    b.ToTable("CanvasList");
                 });
 
-            modelBuilder.Entity("CheckListApi.Models.Task", b =>
+            modelBuilder.Entity("CheckListApi.Models.MyTask", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -78,7 +78,7 @@ namespace CheckListApi.Data.Migrations
 
                     b.HasIndex("BoardId");
 
-                    b.ToTable("Task");
+                    b.ToTable("Tasks");
                 });
 
             modelBuilder.Entity("CheckListApi.Models.TaskBoard", b =>
@@ -101,7 +101,7 @@ namespace CheckListApi.Data.Migrations
 
                     b.HasIndex("CanvasId");
 
-                    b.ToTable("TaskBoard");
+                    b.ToTable("TaskBoards");
                 });
 
             modelBuilder.Entity("CheckListApi.Models.User", b =>
@@ -146,7 +146,7 @@ namespace CheckListApi.Data.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("CheckListApi.Models.Task", b =>
+            modelBuilder.Entity("CheckListApi.Models.MyTask", b =>
                 {
                     b.HasOne("CheckListApi.Models.TaskBoard", "Board")
                         .WithMany("Tasks")
