@@ -15,9 +15,6 @@ namespace CheckListApi.Data
 
         public async Task AddCanvasToUser(Canvas canvas)
         {
-            canvas.User = await _context.Users.FirstOrDefaultAsync(u => u.Id == canvas.UserId);
-            canvas.TaskBoards = new List<TaskBoard>();
-
             _context.CanvasList.Add(canvas);
             await _context.SaveChangesAsync();
         }
@@ -37,6 +34,11 @@ namespace CheckListApi.Data
         public async Task<List<Canvas>> GetCanvasListForUser(int id)
         {
             return await _context.CanvasList.Where(c => c.UserId == id).ToListAsync();
+        }
+
+        public async Task<List<TaskBoard>> GetTaskBoardListForCanvas(int canvasId)
+        {
+            return await _context.TaskBoards.Where(t => t.CanvasId == canvasId).ToListAsync();
         }
     }
 }

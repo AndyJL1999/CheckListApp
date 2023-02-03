@@ -8,5 +8,6 @@ namespace CheckListApi.Interfaces
         public Task AddTaskBoardToCanvas(TaskBoard taskBoard);
         public Task AddTaskToBoard(MyTask task);
         public Task<List<Canvas>> GetCanvasListForUser(int id);
+        Task<List<TaskBoard>> GetTaskBoardListForCanvas(int canvasId);
     }
 }

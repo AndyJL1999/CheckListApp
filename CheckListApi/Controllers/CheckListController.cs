@@ -29,6 +29,12 @@ namespace CheckListApi.Controllers
             return Ok(await _checkListRepo.GetCanvasListForUser(id));
         }
 
+        [HttpGet("GetTaskBoards/{id}")]
+        public async Task<ActionResult<List<Canvas>>> GetCanvasTaskBoardList(int id)
+        {
+            return Ok(await _checkListRepo.GetTaskBoardListForCanvas(id));
+        }
+
         [HttpPost("Canvas")]
         public async Task<ActionResult> AddCanvas(AddCanvasDto canvasDto)
         {
