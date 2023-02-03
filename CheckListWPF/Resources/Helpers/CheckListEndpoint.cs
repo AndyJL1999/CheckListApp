@@ -1,4 +1,5 @@
-﻿using CheckListApi.Models;
+﻿using CheckListApi.DTOs;
+using CheckListApi.Models;
 using CheckListWPF.Resources.Interfaces;
 using Microsoft.Extensions.Caching.Memory;
 using System;
@@ -38,6 +39,71 @@ namespace CheckListWPF.Resources.Helpers
                 }
             }
 
+        }
+
+        public async Task<IEnumerable<TaskBoard>> GetCanvasTaskBoardList(int canvasId)
+        {
+            List<TaskBoard> output;
+
+            using (HttpResponseMessage response = await _apiHelper.ApiClient.GetAsync(_apiHelper.ApiClient.BaseAddress + $"CheckList/GetTaskBoards/{canvasId}"))
+            {
+                if (response.IsSuccessStatusCode)
+                {
+                    output = await response.Content.ReadFromJsonAsync<List<TaskBoard>>();
+
+                    return output;
+                }
+                else
+                {
+                    throw new Exception(response.ReasonPhrase);
+                }
+            }
+
+        }
+
+        public async Task AddCanvasToList(string title)
+        {
+            var newCanvas = new AddCanvasDto
+            {
+                Title = title
+            };
+
+            var content = JsonContent.Create(newCanvas);
+
+            using (HttpResponseMessage response = await _apiHelper.ApiClient.PostAsync(_apiHelper.ApiClient.BaseAddress + "CheckList/Canvas", content))
+            {
+                if (response.IsSuccessStatusCode)
+                {
+                    
+                }
+                else
+                {
+                    throw new Exception(response.ReasonPhrase);
+                }
+            }
+        }
+
+        public async Task AddTaskBoardToCanvas(string title, int canvasId)
+        {
+            var newCanvas = new AddTaskBoardDto
+            {
+                Title = title,
+                CanvasId = canvasId
+            };
+
+            var content = JsonContent.Create(newCanvas);
+
+            using (HttpResponseMessage response = await _apiHelper.ApiClient.PostAsync(_apiHelper.ApiClient.BaseAddress + "CheckList/TaskBoard", content))
+            {
+                if (response.IsSuccessStatusCode)
+                {
+
+                }
+                else
+                {
+                    throw new Exception(response.ReasonPhrase);
+                }
+            }
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Prism.Events;
+﻿using CheckListWPF.MVVM.Model;
+using Prism.Events;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace CheckListWPF.Resources.EventAggregators
 {
-    public class ResetSelectedCanvasEvent : PubSubEvent
+    internal class CanvasCarrierEvent : PubSubEvent<CanvasDisplayModel>
     {
     }
 }

@@ -18,8 +18,16 @@
                        Text="{Binding Title}" Margin="10,0,0,0" 
                        HorizontalAlignment="Left"/>
 
-            <TextBlock FontSize="18" Margin="10,10" 
-                       Text="Number of Boards"/>
+            <StackPanel Orientation="Horizontal" Margin="10,10">
+
+                <TextBlock Text="Number of boards: " FontSize="18"
+                           VerticalAlignment="Center"/>
+                
+                <TextBlock FontSize="18" 
+                           Text="{Binding TaskBoards.Count}"/>
+                
+            </StackPanel>
+           
         </StackPanel>
     </Grid>
 </UserControl>

@@ -9,29 +9,31 @@ using System.Threading.Tasks;
 
 namespace CheckListWPF.MVVM.Model
 {
-    public class CanvasDisplayModel : INotifyPropertyChanged
+    public class TaskBoardDisplayModel :INotifyPropertyChanged
     {
         private string _title;
-        private List<TaskBoardDisplayModel> _taskBoards;
+        private List<MyTask> _tasks;
 
         public int Id { get; set; }
 
-        public string Title 
-        { 
+        public int CanvasId { get; set; }
+
+        public string Title
+        {
             get { return _title; }
             set
             {
                 _title = value;
                 INotifyPropertyChanged(nameof(Title));
-            } 
+            }
         }
-        public List<TaskBoardDisplayModel> TaskBoards 
-        { 
-            get { return _taskBoards; }
+        public List<MyTask> Tasks
+        {
+            get { return _tasks; }
             set
             {
-                _taskBoards = value;
-                INotifyPropertyChanged(nameof(TaskBoards));
+                _tasks = value;
+                INotifyPropertyChanged(nameof(Tasks));
             }
         }
 

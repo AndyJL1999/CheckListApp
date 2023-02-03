@@ -43,7 +43,8 @@
                 Foreground="White" BorderThickness="0"
                 Command="{Binding OpenAccountCommand}"/>
 
-        <TextBlock Text="Your Canvas" Grid.Row="1" FontSize="26" Margin="15,0"
+        <TextBlock Text="{Binding CanvasTitle}" Grid.Row="1" FontSize="26" 
+                   Margin="15,0"
                    HorizontalAlignment="Left"
                    VerticalAlignment="Center" 
                    FontFamily="Impact" Foreground="White"/>
@@ -59,24 +60,34 @@
             <Button Content="➕" Background="Transparent" Margin="10,0"
                     Foreground="RoyalBlue" FontSize="24" BorderThickness="0"
                     HorizontalAlignment="Right" VerticalAlignment="Center"
-                    Height="35" Width="35" Grid.Row="1" Grid.Column="3"/>
+                    Height="35" Width="35" Grid.Row="1" Grid.Column="3"
+                    Command="{Binding OpenAddTaskBoardCommand}"/>
             
         </StackPanel>
 
 
-        <ScrollViewer Grid.Row="2" Grid.ColumnSpan="4" VerticalScrollBarVisibility="Auto"
+        <ScrollViewer Grid.Row="2" Grid.ColumnSpan="4" 
+                      VerticalScrollBarVisibility="Auto"
                       HorizontalScrollBarVisibility="Auto">
-            
-            <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.ColumnSpan="4"
-                    VerticalAlignment="Top">
-                <uc:TaskBoardControl/>
-                <uc:TaskBoardControl/>
-                <uc:TaskBoardControl/>
-                <uc:TaskBoardControl/>
-                <uc:TaskBoardControl/>
-                <uc:TaskBoardControl/>
-            </StackPanel>
-            
+
+            <ListView Background="Transparent" VerticalAlignment="Top"
+                      BorderThickness="0"
+                      ItemsSource="{Binding TaskBoards}">
+                
+                <ListView.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Horizontal"/>
+                    </ItemsPanelTemplate>
+                </ListView.ItemsPanel>
+
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <uc:TaskBoardControl TaskBoard="{Binding}"/>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+                
+            </ListView>
+
         </ScrollViewer>
         
     </Grid>

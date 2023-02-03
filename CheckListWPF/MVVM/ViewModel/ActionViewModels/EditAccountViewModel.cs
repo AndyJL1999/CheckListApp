@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace CheckListWPF.MVVM.ViewModel
+namespace CheckListWPF.MVVM.ViewModel.ActionViewModels
 {
     public class EditAccountViewModel : ObservableObject
     {
@@ -33,7 +33,7 @@ namespace CheckListWPF.MVVM.ViewModel
 
         public void CloseWindow()
         {
-            var w = App.Current.MainWindow.OwnedWindows[0];
+            var w = System.Windows.Application.Current.MainWindow.OwnedWindows[0];
             w.Close();
         }
     }

@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using CheckListWPF.MVVM.Model;
+using CheckListWPF.MVVM.ViewModel.ActionViewModels;
 using CheckListWPF.Resources;
 using CheckListWPF.Resources.EventAggregators;
 using CheckListWPF.Resources.Interfaces;
@@ -48,9 +49,11 @@ namespace CheckListWPF.MVVM.ViewModel
                 SetCanvasList();
             });
 
-            _eventAggregator.GetEvent<ResetSelectedCanvasEvent>().Subscribe(() => {
+            _eventAggregator.GetEvent<ResetCanvasListEvent>().Subscribe(() => {
 
+                //Unselect canvas and refresh canvas list
                 SelectedCanvas = null;
+                SetCanvasList();
             });
         }
 
@@ -84,7 +87,14 @@ namespace CheckListWPF.MVVM.ViewModel
             {
                 _selectedCanvas = value;
                 OnPropertyChanged(nameof(SelectedCanvas));
+
                 ViewChanged?.Invoke(this, new EventArgs<string>("2"));
+
+                if (SelectedCanvas != null)
+                {
+                    //Carry Canvas data to the CanvasViewModel subscriber
+                    _eventAggregator.GetEvent<CanvasCarrierEvent>().Publish(SelectedCanvas);
+                }
             }
         }
 
@@ -118,7 +128,7 @@ namespace CheckListWPF.MVVM.ViewModel
 
         private void OpenAddCanvas()
         {
-            OpenWindow(new CreateCanvasViewModel());
+            OpenWindow(new CreateCanvasViewModel(_checkListEndpoint, _eventAggregator));
         }
 
         private void OpenEditAccount()

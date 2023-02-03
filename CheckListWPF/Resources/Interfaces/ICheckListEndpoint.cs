@@ -10,5 +10,8 @@ namespace CheckListWPF.Resources.Interfaces
     public interface ICheckListEndpoint
     {
         Task<IEnumerable<Canvas>> GetUserCanvasList();
+        Task AddCanvasToList(string title);
+        Task AddTaskBoardToCanvas(string title, int canvasId);
+        Task<IEnumerable<TaskBoard>> GetCanvasTaskBoardList(int canvasId);
     }
 }

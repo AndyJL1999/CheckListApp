@@ -32,6 +32,8 @@ namespace CheckListWPF
                 {
                     myConfig.CreateMap<Canvas, CanvasDisplayModel>();
                     myConfig.CreateMap<CanvasDisplayModel, Canvas>();
+                    myConfig.CreateMap<TaskBoard, TaskBoardDisplayModel>();
+                    myConfig.CreateMap<TaskBoardDisplayModel, TaskBoard>();
                 });
 
                 var mapper = config.CreateMapper();

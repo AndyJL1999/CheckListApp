@@ -22,7 +22,7 @@
                 <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
 
-            <TextBlock Text="TaskBoard" FontSize="21" Margin="10,5"/>
+            <TextBlock Text="{Binding Title}" FontSize="21" Margin="10,5"/>
             
             <Button Content="🔻" Grid.Column="1" Margin="10"
                     HorizontalAlignment="Right"
