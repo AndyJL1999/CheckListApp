@@ -27,7 +27,7 @@ namespace CheckListApi.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "CanvasList",
+                name: "Canvases",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -37,9 +37,9 @@ namespace CheckListApi.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CanvasList", x => x.Id);
+                    table.PrimaryKey("PK_Canvases", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_CanvasList_Users_UserId",
+                        name: "FK_Canvases_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "Id",
@@ -59,9 +59,9 @@ namespace CheckListApi.Data.Migrations
                 {
                     table.PrimaryKey("PK_TaskBoards", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_TaskBoards_CanvasList_CanvasId",
+                        name: "FK_TaskBoards_Canvases_CanvasId",
                         column: x => x.CanvasId,
-                        principalTable: "CanvasList",
+                        principalTable: "Canvases",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -90,8 +90,8 @@ namespace CheckListApi.Data.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_CanvasList_UserId",
-                table: "CanvasList",
+                name: "IX_Canvases_UserId",
+                table: "Canvases",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
@@ -115,7 +115,7 @@ namespace CheckListApi.Data.Migrations
                 name: "TaskBoards");
 
             migrationBuilder.DropTable(
-                name: "CanvasList");
+                name: "Canvases");
 
             migrationBuilder.DropTable(
                 name: "Users");

@@ -24,9 +24,9 @@ namespace CheckListApi.Controllers
         [HttpGet]
         public async Task<ActionResult<List<Canvas>>> GetCanvasList()
         {
-            var id = User.GetUserId();
+            var userId = User.GetUserId();
 
-            return Ok(await _checkListRepo.GetCanvasListForUser(id));
+            return Ok(await _checkListRepo.GetCanvasListForUser(userId));
         }
 
         [HttpGet("GetTaskBoards/{id}")]

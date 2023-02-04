@@ -12,6 +12,6 @@ namespace CheckListApi.Models
 
         [MaxLength(25)]
         public string Title { get; set; }
-        public List<TaskBoard> TaskBoards { get; set; }
+        public List<TaskBoard>? TaskBoards { get; set; }
     }
 }

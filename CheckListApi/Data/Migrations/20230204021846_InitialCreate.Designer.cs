@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CheckListApi.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20230201213607_InitialCreate")]
+    [Migration("20230204021846_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -44,7 +44,7 @@ namespace CheckListApi.Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("CanvasList");
+                    b.ToTable("Canvases");
                 });
 
             modelBuilder.Entity("CheckListApi.Models.MyTask", b =>
@@ -138,7 +138,7 @@ namespace CheckListApi.Data.Migrations
             modelBuilder.Entity("CheckListApi.Models.Canvas", b =>
                 {
                     b.HasOne("CheckListApi.Models.User", "User")
-                        .WithMany("CanvasList")
+                        .WithMany("Canvases")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -180,7 +180,7 @@ namespace CheckListApi.Data.Migrations
 
             modelBuilder.Entity("CheckListApi.Models.User", b =>
                 {
-                    b.Navigation("CanvasList");
+                    b.Navigation("Canvases");
                 });
 #pragma warning restore 612, 618
         }
