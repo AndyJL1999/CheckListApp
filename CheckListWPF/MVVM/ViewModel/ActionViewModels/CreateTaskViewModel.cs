@@ -1,6 +1,6 @@
-﻿using CheckListWPF.Resources;
-using CheckListWPF.Resources.EventAggregators;
+﻿using CheckListWPF.Resources.EventAggregators;
 using CheckListWPF.Resources.Interfaces;
+using CheckListWPF.Resources;
 using Prism.Events;
 using System;
 using System.Collections.Generic;
@@ -12,26 +12,30 @@ using System.Windows;
 
 namespace CheckListWPF.MVVM.ViewModel.ActionViewModels
 {
-    public class CreateTaskBoardViewModel : ObservableObject
+    public class CreateTaskViewModel : ObservableObject
     {
+        
         private readonly ICheckListEndpoint _checkListEndpoint;
         private readonly IEventAggregator _eventAggregator;
         private ICommand _closeWindowCommand;
-        private ICommand _createTaskBoardCommand;
+        private ICommand _createTaskCommand;
         private Visibility _errorVisibility;
         private string _errorMessage;
         private string _title;
+        private string _description;
+        private bool _inProgress;
+        private bool _isDone;
 
-        public CreateTaskBoardViewModel(ICheckListEndpoint checkListEndpoint, IEventAggregator eventAggregator, int canvasId)
+        public CreateTaskViewModel(ICheckListEndpoint checkListEndpoint, IEventAggregator eventAggregator, int boardId)
         {
             _checkListEndpoint = checkListEndpoint;
             _eventAggregator = eventAggregator;
 
             ErrorVisibility = Visibility.Collapsed;
-            CanvasId = canvasId;
+            BoardId = boardId;
         }
 
-        public int CanvasId { get; set; }
+        public int BoardId { get; set; }
 
         public string ErrorMessage
         {
@@ -50,6 +54,36 @@ namespace CheckListWPF.MVVM.ViewModel.ActionViewModels
             {
                 _title = value;
                 OnPropertyChanged(nameof(Title));
+            }
+        }
+
+        public string Description
+        {
+            get { return _description; }
+            set
+            {
+                _description = value;
+                OnPropertyChanged(nameof(Description));
+            }
+        }
+
+        public bool InProgress 
+        {
+            get { return _inProgress; }
+            set
+            {
+                _inProgress = value;
+                OnPropertyChanged(nameof(InProgress));
+            }
+        }
+
+        public bool IsDone 
+        { 
+            get { return _isDone; }
+            set
+            {
+                _isDone = value;
+                OnPropertyChanged(nameof(IsDone));
             }
         }
 
@@ -77,16 +111,16 @@ namespace CheckListWPF.MVVM.ViewModel.ActionViewModels
 
         }
 
-        public ICommand CreateTaskBoardCommand
+        public ICommand CreateTaskCommand
         {
             get
             {
-                if (_createTaskBoardCommand is null)
+                if (_createTaskCommand is null)
                 {
-                    _createTaskBoardCommand = new RelayCommand(p => CreateNewTaskBoard(), p => true);
+                    _createTaskCommand = new RelayCommand(p => CreateNewTask(), p => true);
                 }
 
-                return _createTaskBoardCommand;
+                return _createTaskCommand;
             }
 
         }
@@ -97,13 +131,13 @@ namespace CheckListWPF.MVVM.ViewModel.ActionViewModels
             w.Close();
         }
 
-        public async void CreateNewTaskBoard()
+        public async void CreateNewTask()
         {
             if (string.IsNullOrEmpty(Title) == false && Title.Length <= 25)
             {
                 ErrorVisibility = Visibility.Collapsed;
 
-                await _checkListEndpoint.AddTaskBoardToCanvas(Title, CanvasId);
+                await _checkListEndpoint.AddTaskToBoard(Title, Description, BoardId);
 
                 _eventAggregator.GetEvent<ResetTaskBoardsEvent>().Publish();
 

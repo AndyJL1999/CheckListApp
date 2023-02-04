@@ -33,6 +33,10 @@
                 <actionView:CreateTaskBoardControl/>
             </DataTemplate>
 
+            <DataTemplate DataType="{x:Type actionVM:CreateTaskViewModel}">
+                <actionView:CreateTaskControl/>
+            </DataTemplate>
+
 
         </ResourceDictionary>
     </Application.Resources>

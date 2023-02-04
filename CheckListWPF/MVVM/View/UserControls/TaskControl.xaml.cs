@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CheckListWPF.MVVM.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,6 +21,24 @@ namespace CheckListWPF.MVVM.View.UserControls
     /// </summary>
     public partial class TaskControl : UserControl
     {
+        public TaskDisplayModel Task
+        {
+            get { return (TaskDisplayModel)GetValue(TaskProperty); }
+            set { SetValue(TaskProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for MyProperty.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty TaskProperty =
+            DependencyProperty.Register("Task", typeof(TaskDisplayModel), typeof(TaskControl), new PropertyMetadata(null, SetValues));
+
+        private static void SetValues(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            TaskControl canvasCtrl = d as TaskControl;
+            if (canvasCtrl != null)
+            {
+                canvasCtrl.DataContext = canvasCtrl.Task;
+            }
+        }
 
         public TaskControl()
         {

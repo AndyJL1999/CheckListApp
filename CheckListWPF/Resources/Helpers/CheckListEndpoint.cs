@@ -105,5 +105,32 @@ namespace CheckListWPF.Resources.Helpers
                 }
             }
         }
+
+        public async Task AddTaskToBoard(string title, string description, int boardId)
+        {
+            var newCanvas = new AddTaskDto
+            {
+                Title = title,
+                Description = description,
+                IsDone = false,
+                InProgress = false,
+                BoardId = boardId,
+
+            };
+
+            var content = JsonContent.Create(newCanvas);
+
+            using (HttpResponseMessage response = await _apiHelper.ApiClient.PostAsync(_apiHelper.ApiClient.BaseAddress + "CheckList/Task", content))
+            {
+                if (response.IsSuccessStatusCode)
+                {
+
+                }
+                else
+                {
+                    throw new Exception(response.ReasonPhrase);
+                }
+            }
+        }
     }
 }

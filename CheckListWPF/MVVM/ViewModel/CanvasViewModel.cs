@@ -46,6 +46,11 @@ namespace CheckListWPF.MVVM.ViewModel
                 CanvasTitle = c.Title;
                 SetTaskBoardList();
             });
+
+            _eventAggregator.GetEvent<ResetTaskBoardsEvent>().Subscribe(() =>
+            {
+                SetTaskBoardList();
+            });
         }
 
         public string PageId { get; set; }

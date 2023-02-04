@@ -88,10 +88,10 @@ namespace CheckListWPF.MVVM.ViewModel
                 _selectedCanvas = value;
                 OnPropertyChanged(nameof(SelectedCanvas));
 
-                ViewChanged?.Invoke(this, new EventArgs<string>("2"));
-
                 if (SelectedCanvas != null)
                 {
+                    ViewChanged?.Invoke(this, new EventArgs<string>("2"));
+
                     //Carry Canvas data to the CanvasViewModel subscriber
                     _eventAggregator.GetEvent<CanvasCarrierEvent>().Publish(SelectedCanvas);
                 }

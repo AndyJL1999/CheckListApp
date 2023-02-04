@@ -21,7 +21,7 @@
                 <RowDefinition/>
             </Grid.RowDefinitions>
 
-            <TextBlock Text="Task" FontSize="18" Margin="10, 5"/>
+            <TextBlock Text="{Binding Title}" FontSize="18" Margin="10, 5"/>
             
             <Button Content="❌" Grid.Column="1" Margin="0,0,20,0"
                     HorizontalAlignment="Center"
@@ -29,7 +29,7 @@
                     Background="Transparent" Foreground="Red"
                     BorderThickness="0"/>
             
-            <TextBlock Text="This Description is for testing purposes only. Gotta check this out now." 
+            <TextBlock Text="{Binding Description}"
                        Grid.Row="1" Grid.ColumnSpan="2" Margin="10,5"
                        TextWrapping="Wrap"/>
             

@@ -1,0 +1,61 @@
+﻿<UserControl x:Class="CheckListWPF.MVVM.View.ActionViews.CreateTaskControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:CheckListWPF.MVVM.View.ActionViews"
+             mc:Ignorable="d" 
+             d:DesignHeight="250" d:DesignWidth="300">
+
+    <Border CornerRadius="20" Background="LightSteelBlue" BorderThickness="0">
+        <Grid>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0.1*"/>
+                <ColumnDefinition Width="0.8*"/>
+                <ColumnDefinition Width="0.1*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="0.1*"/>
+                <RowDefinition Height="0.8*"/>
+                <RowDefinition Height="0.1*"/>
+            </Grid.RowDefinitions>
+
+            <StackPanel Grid.Row="1" Grid.Column="1">
+
+                <TextBlock Text="Add Task" Margin="0,0,0,5"
+                           FontSize="21" FontFamily="Impact"
+                           Foreground="White"/>
+                <TextBlock Text="{Binding ErrorMessage}" FontSize="10" 
+                           Foreground="Red"
+                           TextWrapping="Wrap"
+                           Visibility="{Binding ErrorVisibility}"/>
+
+                <TextBlock Text="Title" FontSize="14"
+                           FontFamily="Impact" Foreground="White"/>
+                <TextBox Text="{Binding Title, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+
+                <TextBlock Text="Description" FontSize="14"
+                           FontFamily="Impact" Foreground="White"/>
+                <TextBox Text="{Binding Description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+
+
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+
+                    <Button Content="Add" Margin="10"
+                            FontSize="16" Width="65"
+                            Background="LimeGreen"
+                            Command="{Binding CreateTaskCommand}"/>
+                    <Button Content="Cancel" Margin="10"
+                            FontSize="16" Width="65"
+                            Background="Red"
+                            Command="{Binding CloseWindowCommand}"/>
+
+                </StackPanel>
+
+            </StackPanel>
+
+        </Grid>
+    </Border>
+    
+</UserControl>
