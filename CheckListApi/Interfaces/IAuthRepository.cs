@@ -9,6 +9,6 @@ namespace CheckListApi.Interfaces
         Task<UserDto> Login(LoginDto loginDto);
         Task<bool> DoesUserExist(string username);
         bool ValidateEmail(string email);
-        public void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt);
+        void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt);
     }
 }

@@ -4,10 +4,13 @@ namespace CheckListApi.Interfaces
 {
     public interface ICheckListRepository
     {
-        public Task AddCanvasToUser(Canvas canvas);
-        public Task AddTaskBoardToCanvas(TaskBoard taskBoard);
-        public Task AddTaskToBoard(MyTask task);
-        public Task<List<Canvas>> GetCanvasListForUser(int userId);
+        Task AddCanvasToUser(Canvas canvas);
+        Task AddTaskBoardToCanvas(TaskBoard taskBoard);
+        Task AddTaskToBoard(MyTask task);
+        Task<List<Canvas>> GetCanvasListForUser(int userId);
         Task<List<TaskBoard>> GetTaskBoardListForCanvas(int canvasId);
+        Task DeleteCanvas(Canvas canvas);
+        Task DeleteTaskBoard(TaskBoard taskBoard);
+        Task DeleteTask(MyTask task);
     }
 }
