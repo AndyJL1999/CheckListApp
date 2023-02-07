@@ -14,5 +14,7 @@ namespace CheckListWPF.Resources.Interfaces
         Task AddTaskBoardToCanvas(string title, int canvasId);
         Task<IEnumerable<TaskBoard>> GetCanvasTaskBoardList(int canvasId);
         Task AddTaskToBoard(string title, string description, int boardId);
+        Task DeleteBoardFromCanvas(int canvasId, int boardId);
+        Task DeleteTaskFromBoard(int boardId, int taskId);
     }
 }

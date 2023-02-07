@@ -23,12 +23,15 @@ namespace CheckListWPF.MVVM.ViewModel
     {
         private ICommand _openAccountCommand;
         private ICommand _openAddTaskBoardCommand;
+        private ICommand _openAddTaskCommand;
+        private ICommand _deleteBoardCommand;
+        private ICommand _deleteTaskCommand;
         private readonly ICheckListEndpoint _checkListEndpoint;
         private readonly IMapper _mapper;
         private IEventAggregator _eventAggregator;
         private string _canvasTitle;
         private ObservableCollection<TaskBoardDisplayModel> _taskBoards;
-        
+
         public event EventHandler<EventArgs<string>>? ViewChanged;
 
         public CanvasViewModel(ICheckListEndpoint checkListEndpoint, IMapper mapper, IEventAggregator eventAggregator, string pageIndex = "2")
@@ -109,14 +112,65 @@ namespace CheckListWPF.MVVM.ViewModel
 
         }
 
+        public ICommand OpenAddTaskCommand
+        {
+            get
+            {
+                if (_openAddTaskCommand is null)
+                {
+                    _openAddTaskCommand = new RelayCommand(p => OpenAddTask((int)p), p => true);
+                }
+
+                return _openAddTaskCommand;
+            }
+
+        }
+
+        public ICommand DeleteBoardCommand
+        {
+            get
+            {
+                if(_deleteBoardCommand is null)
+                {
+                    _deleteBoardCommand = new RelayCommand(p => DeleteTaskBoard((int)p), p => true);
+                }
+
+                return _deleteBoardCommand;
+            }
+        }
+
+        public ICommand DeleteTaskCommand 
+        {
+            get
+            {
+                if (_deleteTaskCommand is null)
+                {
+                    _deleteTaskCommand = new RelayCommand(p => DeleteTask((TaskDisplayModel)p), p => true);
+                }
+
+                return _deleteTaskCommand;
+            }
+        }
         private void OpenAddTaskBoard()
         {
             OpenWindow(new CreateTaskBoardViewModel(_checkListEndpoint, _eventAggregator, CanvasId));
         }
 
-        private void OpenAddTask()
+        private void OpenAddTask(int boardId)
         {
-            //OpenWindow();
+            OpenWindow(new CreateTaskViewModel(_checkListEndpoint, _eventAggregator, boardId));
+        }
+
+        private async void DeleteTaskBoard(int boardId)
+        {
+            await _checkListEndpoint.DeleteBoardFromCanvas(CanvasId, boardId);
+            _eventAggregator.GetEvent<ResetTaskBoardsEvent>().Publish();
+        }
+
+        private async void DeleteTask(TaskDisplayModel task)
+        {
+            await _checkListEndpoint.DeleteTaskFromBoard(task.BoardId, task.Id);
+            _eventAggregator.GetEvent<ResetTaskBoardsEvent>().Publish();
         }
 
         private void OpenWindow(ObservableObject viewModel)

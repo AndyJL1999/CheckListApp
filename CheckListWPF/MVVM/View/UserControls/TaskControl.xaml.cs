@@ -40,9 +40,23 @@ namespace CheckListWPF.MVVM.View.UserControls
             }
         }
 
+
+
+        public ICommand DeleteTaskProp
+        {
+            get { return (ICommand)GetValue(DeleteTaskPropProperty); }
+            set { SetValue(DeleteTaskPropProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for DeleteTaskProp.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty DeleteTaskPropProperty =
+            DependencyProperty.Register("DeleteTaskProp", typeof(ICommand), typeof(TaskControl), new PropertyMetadata(null));
+
+
         public TaskControl()
         {
             InitializeComponent();
         }
+
     }
 }

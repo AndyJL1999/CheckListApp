@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Json;
+using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -25,7 +26,7 @@ namespace CheckListWPF.Resources.Helpers
         {
             List<Canvas> output;
 
-            using (HttpResponseMessage response = await _apiHelper.ApiClient.GetAsync(_apiHelper.ApiClient.BaseAddress + "CheckList"))
+            using (HttpResponseMessage response = await _apiHelper.ApiClient.GetAsync(_apiHelper.ApiClient.BaseAddress + "CheckList/GetCanvases"))
             {
                 if (response.IsSuccessStatusCode)
                 {
@@ -70,7 +71,7 @@ namespace CheckListWPF.Resources.Helpers
 
             var content = JsonContent.Create(newCanvas);
 
-            using (HttpResponseMessage response = await _apiHelper.ApiClient.PostAsync(_apiHelper.ApiClient.BaseAddress + "CheckList/Canvas", content))
+            using (HttpResponseMessage response = await _apiHelper.ApiClient.PostAsync(_apiHelper.ApiClient.BaseAddress + "CheckList/AddCanvas", content))
             {
                 if (response.IsSuccessStatusCode)
                 {
@@ -93,7 +94,7 @@ namespace CheckListWPF.Resources.Helpers
 
             var content = JsonContent.Create(newCanvas);
 
-            using (HttpResponseMessage response = await _apiHelper.ApiClient.PostAsync(_apiHelper.ApiClient.BaseAddress + "CheckList/TaskBoard", content))
+            using (HttpResponseMessage response = await _apiHelper.ApiClient.PostAsync(_apiHelper.ApiClient.BaseAddress + "CheckList/AddTaskBoard", content))
             {
                 if (response.IsSuccessStatusCode)
                 {
@@ -120,7 +121,37 @@ namespace CheckListWPF.Resources.Helpers
 
             var content = JsonContent.Create(newCanvas);
 
-            using (HttpResponseMessage response = await _apiHelper.ApiClient.PostAsync(_apiHelper.ApiClient.BaseAddress + "CheckList/Task", content))
+            using (HttpResponseMessage response = await _apiHelper.ApiClient.PostAsync(_apiHelper.ApiClient.BaseAddress + "CheckList/AddTask", content))
+            {
+                if (response.IsSuccessStatusCode)
+                {
+
+                }
+                else
+                {
+                    throw new Exception(response.ReasonPhrase);
+                }
+            }
+        }
+
+        public async Task DeleteBoardFromCanvas(int canvasId, int boardId)
+        {
+            using (HttpResponseMessage response = await _apiHelper.ApiClient.DeleteAsync(_apiHelper.ApiClient.BaseAddress + $"CheckList/DeleteTaskBoard/{canvasId}/{boardId}"))
+            {
+                if (response.IsSuccessStatusCode)
+                {
+
+                }
+                else
+                {
+                    throw new Exception(response.ReasonPhrase);
+                }
+            }
+        }
+
+        public async Task DeleteTaskFromBoard(int boardId, int taskId)
+        {
+            using (HttpResponseMessage response = await _apiHelper.ApiClient.DeleteAsync(_apiHelper.ApiClient.BaseAddress + $"CheckList/DeleteTask/{boardId}/{taskId}"))
             {
                 if (response.IsSuccessStatusCode)
                 {

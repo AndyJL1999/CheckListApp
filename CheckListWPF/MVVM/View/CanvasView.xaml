@@ -70,23 +70,30 @@
                       VerticalScrollBarVisibility="Auto"
                       HorizontalScrollBarVisibility="Auto">
 
-            <ListView Background="Transparent" VerticalAlignment="Top"
+            <ItemsControl Background="Transparent" VerticalAlignment="Top"
                       BorderThickness="0"
                       ItemsSource="{Binding TaskBoards}">
                 
-                <ListView.ItemsPanel>
+                <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
                         <StackPanel Orientation="Horizontal"/>
                     </ItemsPanelTemplate>
-                </ListView.ItemsPanel>
+                </ItemsControl.ItemsPanel>
 
-                <ListView.ItemTemplate>
+                <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <uc:TaskBoardControl TaskBoard="{Binding}"/>
+                        <uc:TaskBoardControl TaskBoard="{Binding}"
+                                             AddCommandProp="{Binding Path=DataContext.OpenAddTaskCommand,
+                            RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type UserControl}}}"
+                                             DeleteCommandProp="{Binding Path=DataContext.DeleteBoardCommand,
+                            RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type UserControl}}}"
+                                             DeleteTaskCommandProp="{Binding Path=DataContext.DeleteTaskCommand,
+                            RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type UserControl}}}"
+                                             VerticalAlignment="Top"/>
                     </DataTemplate>
-                </ListView.ItemTemplate>
+                </ItemsControl.ItemTemplate>
                 
-            </ListView>
+            </ItemsControl>
 
         </ScrollViewer>
         

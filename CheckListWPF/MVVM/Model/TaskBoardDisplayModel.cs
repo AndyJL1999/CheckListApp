@@ -12,7 +12,7 @@ namespace CheckListWPF.MVVM.Model
     public class TaskBoardDisplayModel :INotifyPropertyChanged
     {
         private string _title;
-        private List<MyTask> _tasks;
+        private List<TaskDisplayModel> _tasks;
 
         public int Id { get; set; }
 
@@ -27,7 +27,7 @@ namespace CheckListWPF.MVVM.Model
                 INotifyPropertyChanged(nameof(Title));
             }
         }
-        public List<MyTask> Tasks
+        public List<TaskDisplayModel> Tasks
         {
             get { return _tasks; }
             set
