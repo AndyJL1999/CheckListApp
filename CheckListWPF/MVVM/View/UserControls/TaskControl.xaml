@@ -39,9 +39,22 @@
                        TextWrapping="Wrap"/>
             
             <StackPanel Orientation="Horizontal" Grid.Row="2" Margin="10,5">
-                <RadioButton Background="Red"/>
-                <RadioButton Background="Orange"/>
-                <RadioButton Background="Green"/>
+                <RadioButton BorderBrush="Red" IsChecked="{Binding Path=RedCheck,
+                             RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:TaskControl}}, 
+                             Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                             Style="{StaticResource TaskButtonTheme}"/>
+
+                <RadioButton BorderBrush="Orange" IsChecked="{Binding Path=OrangeCheck,
+                             RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:TaskControl}}, 
+                             Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                             Style="{StaticResource TaskButtonTheme}"
+                             Command=""/>
+
+                <RadioButton BorderBrush="Green" IsChecked="{Binding Path=GreenCheck,
+                             RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:TaskControl}},
+                             Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                             Style="{StaticResource TaskButtonTheme}"
+                             Command=""/>
             </StackPanel>
 
         </Grid>

@@ -1,6 +1,8 @@
 ﻿using CheckListWPF.MVVM.Model;
+using CheckListWPF.Resources;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,7 +21,7 @@ namespace CheckListWPF.MVVM.View.UserControls
     /// <summary>
     /// Interaction logic for TaskControl.xaml
     /// </summary>
-    public partial class TaskControl : UserControl
+    public partial class TaskControl : UserControl, INotifyPropertyChanged
     {
         public TaskDisplayModel Task
         {
@@ -37,9 +39,11 @@ namespace CheckListWPF.MVVM.View.UserControls
             if (canvasCtrl != null)
             {
                 canvasCtrl.DataContext = canvasCtrl.Task;
+                canvasCtrl.GreenCheck = canvasCtrl.Task.IsDone == true ? true : false;
+                canvasCtrl.OrangeCheck = canvasCtrl.Task.InProgress == true ? true : false;
+                canvasCtrl.RedCheck = canvasCtrl.Task.InProgress == false ? true : false;
             }
         }
-
 
 
         public ICommand DeleteTaskProp
@@ -53,10 +57,51 @@ namespace CheckListWPF.MVVM.View.UserControls
             DependencyProperty.Register("DeleteTaskProp", typeof(ICommand), typeof(TaskControl), new PropertyMetadata(null));
 
 
+        private bool _greenCheck;
+        private bool _orangeCheck;
+        private bool _redCheck;
+
+        public event PropertyChangedEventHandler? PropertyChanged;
+
         public TaskControl()
         {
             InitializeComponent();
         }
 
+        public bool GreenCheck 
+        {
+            get { return _greenCheck; }
+            set
+            {
+                _greenCheck = value;
+                OnPropertyChanged(nameof(GreenCheck));
+            }
+        }
+        public bool OrangeCheck
+        {
+            get { return _orangeCheck; }
+            set
+            {
+                _orangeCheck = value;
+                OnPropertyChanged(nameof(OrangeCheck));
+            }
+        }
+        public bool RedCheck 
+        {
+            get { return _redCheck; }
+            set
+            {
+                _redCheck = value;
+                OnPropertyChanged(nameof(RedCheck));
+            }
+        }
+
+        private void OnPropertyChanged(string v)
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(v));
+            }
+        }
     }
 }
