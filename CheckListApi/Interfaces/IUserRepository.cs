@@ -1,4 +1,4 @@
-﻿using CheckListApi.DTOs;
+﻿using CheckListApi.DTOs.PutDtos;
 using CheckListApi.Models;
 
 namespace CheckListApi.Interfaces

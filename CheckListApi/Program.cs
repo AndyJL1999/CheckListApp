@@ -1,6 +1,8 @@
 using AutoMapper;
 using CheckListApi.Data;
 using CheckListApi.DTOs;
+using CheckListApi.DTOs.PostDtos;
+using CheckListApi.DTOs.PutDtos;
 using CheckListApi.Interfaces;
 using CheckListApi.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -45,7 +47,10 @@ var config = new MapperConfiguration(myConfig =>
     myConfig.CreateMap<RegisterDto, User>();
     myConfig.CreateMap<AddCanvasDto, Canvas>();
     myConfig.CreateMap<AddTaskBoardDto, TaskBoard>();
-    myConfig.CreateMap<AddTaskDto, CheckListApi.Models.MyTask>();
+    myConfig.CreateMap<AddTaskDto, MyTask>();
+    myConfig.CreateMap<UpdateCanvasDto, Canvas>();
+    myConfig.CreateMap<UpdateTaskBoardDto, TaskBoard>();
+    myConfig.CreateMap<UpdateTaskDto, MyTask>();
 });
 
 var mapper = config.CreateMapper();

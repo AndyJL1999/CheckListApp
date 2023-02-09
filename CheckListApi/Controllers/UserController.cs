@@ -1,5 +1,5 @@
 ﻿using CheckListApi.Data;
-using CheckListApi.DTOs;
+using CheckListApi.DTOs.PutDtos;
 using CheckListApi.Extentions;
 using CheckListApi.Interfaces;
 using CheckListApi.Models;

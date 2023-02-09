@@ -1,4 +1,4 @@
-﻿namespace CheckListApi.DTOs
+﻿namespace CheckListApi.DTOs.PutDtos
 {
     public class UpdateUserDto
     {

@@ -1,16 +1,21 @@
-﻿using CheckListApi.Models;
+﻿using CheckListApi.DTOs.PostDtos;
+using CheckListApi.DTOs.PutDtos;
+using CheckListApi.Models;
 
 namespace CheckListApi.Interfaces
 {
     public interface ICheckListRepository
     {
-        Task AddCanvasToUser(Canvas canvas);
-        Task AddTaskBoardToCanvas(TaskBoard taskBoard);
-        Task AddTaskToBoard(MyTask task);
+        Task AddCanvasToUser(AddCanvasDto canvas);
+        Task AddTaskBoardToCanvas(AddTaskBoardDto taskBoard);
+        Task AddTaskToBoard(AddTaskDto task);
         Task<List<Canvas>> GetCanvasListForUser(int userId);
         Task<List<TaskBoard>> GetTaskBoardListForCanvas(int canvasId);
-        Task DeleteCanvas(Canvas canvas);
-        Task DeleteTaskBoard(TaskBoard taskBoard);
-        Task DeleteTask(MyTask task);
+        Task UpdateCanvas(UpdateCanvasDto canvas);
+        Task UpdateTaskBoard(UpdateTaskBoardDto taskBoard);
+        Task UpdateTask(UpdateTaskDto task);
+        Task DeleteCanvas(int userId, int canvasId);
+        Task DeleteTaskBoard(int canvasId, int boardId);
+        Task DeleteTask(int boardId, int taskId);
     }
 }

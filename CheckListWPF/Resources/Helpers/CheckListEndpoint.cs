@@ -1,4 +1,5 @@
 ﻿using CheckListApi.DTOs;
+using CheckListApi.DTOs.PostDtos;
 using CheckListApi.Models;
 using CheckListWPF.Resources.Interfaces;
 using Microsoft.Extensions.Caching.Memory;

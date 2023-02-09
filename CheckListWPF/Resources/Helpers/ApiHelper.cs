@@ -10,6 +10,7 @@ using CheckListApi.DTOs;
 using System.Configuration;
 using CheckListWPF.Resources.Interfaces;
 using CheckListWPF.MVVM.Model;
+using CheckListApi.DTOs.PutDtos;
 
 namespace CheckListWPF.Resources.Helpers
 {

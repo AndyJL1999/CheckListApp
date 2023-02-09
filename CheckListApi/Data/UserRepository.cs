@@ -1,8 +1,8 @@
-﻿using CheckListApi.DTOs;
-using CheckListApi.Interfaces;
+﻿using CheckListApi.Interfaces;
 using CheckListApi.Models;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.EntityFrameworkCore;
+using CheckListApi.DTOs.PutDtos;
 
 namespace CheckListApi.Data
 {

@@ -1,4 +1,4 @@
-﻿namespace CheckListApi.DTOs
+﻿namespace CheckListApi.DTOs.PostDtos
 {
     public class AddTaskBoardDto
     {
