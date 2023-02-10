@@ -10,20 +10,16 @@ namespace CheckListApi.Controllers
     public class AuthController : BaseApiController
     {
         private readonly IAuthRepository _authRepo;
-        private readonly IMapper _mapper;
 
-        public AuthController(IAuthRepository authRepo, IMapper mapper)
+        public AuthController(IAuthRepository authRepo)
         {
             _authRepo = authRepo;
-            _mapper = mapper;
         }
 
         [HttpPost("register")]
         public async Task<ActionResult> Register(RegisterDto registerDto)
         {
-            var user = _mapper.Map<User>(registerDto);
-
-            var result = await _authRepo.Register(user, registerDto.Password);
+            var result = await _authRepo.Register(registerDto);
 
             if (result != "User has been registered")
             {

@@ -5,7 +5,7 @@ namespace CheckListApi.Interfaces
 {
     public interface IAuthRepository
     {
-        Task<string> Register(User user, string password);
+        Task<string> Register(RegisterDto userDto);
         Task<UserDto> Login(LoginDto loginDto);
         Task<bool> DoesUserExist(string username);
         bool ValidateEmail(string email);

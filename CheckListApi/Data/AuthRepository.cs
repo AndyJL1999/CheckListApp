@@ -8,28 +8,33 @@ using System.Text.RegularExpressions;
 using System.Text;
 using Microsoft.EntityFrameworkCore;
 using CheckListApi.Interfaces;
+using AutoMapper;
 
 namespace CheckListApi.Data
 {
     public class AuthRepository : IAuthRepository
     {
         private readonly DataContext _context;
+        private readonly IMapper _mapper;
         private readonly IConfiguration _config;
 
-        public AuthRepository(DataContext context, IConfiguration config)
+        public AuthRepository(DataContext context, IMapper mapper, IConfiguration config)
         {
             _context = context;
+            _mapper = mapper;
             _config = config;
         }
 
-        public async Task<string> Register(User registerUser, string password)
+        public async Task<string> Register(RegisterDto userDto)
         {
+            var registerUser = _mapper.Map<User>(userDto);
+
             if (registerUser.Username.IsNullOrEmpty())
             {
                 return "Please enter a username";
             }
 
-            if ((ValidateEmail(registerUser.Email) == false) && (password.Length < 8))
+            if ((ValidateEmail(registerUser.Email) == false) && (userDto.Password.Length < 8))
             {
                 return "Invalid email and password";
             }
@@ -39,7 +44,7 @@ namespace CheckListApi.Data
                 return "Invalid email";
             }
 
-            if (password.Length < 8)
+            if (userDto.Password.Length < 8)
             {
                 return "Password must be at least 8 characters";
             }
@@ -49,7 +54,7 @@ namespace CheckListApi.Data
                 return "User already exists";
             }
 
-            CreatePasswordHash(password, out byte[] passwordHash, out byte[] passwordSalt);
+            CreatePasswordHash(userDto.Password, out byte[] passwordHash, out byte[] passwordSalt);
 
             registerUser.PasswordHash = passwordHash;
             registerUser.PasswordSalt = passwordSalt;
