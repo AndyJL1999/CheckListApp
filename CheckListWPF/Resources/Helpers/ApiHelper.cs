@@ -80,7 +80,7 @@ namespace CheckListWPF.Resources.Helpers
                 Email = email
             });
 
-            using (HttpResponseMessage response = await _apiClient.PostAsync(_apiClient.BaseAddress + "Account/register", data))
+            using (HttpResponseMessage response = await _apiClient.PostAsync(_apiClient.BaseAddress + "Auth/register", data))
             {
                 if (response.IsSuccessStatusCode)
                 {

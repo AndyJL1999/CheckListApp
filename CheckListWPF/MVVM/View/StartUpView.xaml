@@ -32,7 +32,7 @@
         <Border Grid.Row="1" Grid.RowSpan="2" Grid.Column="1" 
                 Grid.ColumnSpan="2" BorderBrush="#CFCFCF" 
                 BorderThickness="1" Margin="5" CornerRadius="20"
-                Visibility="Collapsed">
+                Visibility="{Binding SignUpVisibility}" d:Visibility="Collapsed">
             
             <StackPanel>
                 
@@ -43,38 +43,58 @@
                            FontFamily="Impact" Foreground="White"/>
 
                 <StackPanel Margin="5">
-                    
+
+                    <TextBlock Text="{Binding ResultMessage}"
+                               FontSize="16"
+                               HorizontalAlignment="Center"
+                               Foreground="{Binding ResultColor}"
+                               Visibility="{Binding IsErrorVisible, 
+                               Converter={StaticResource BooleanToVisibilityConverter}}"
+                               TextWrapping="Wrap"/>
+
                     <TextBlock Text="Username" 
                                FontSize="24" Margin="5"
                                HorizontalAlignment="Left"
                                VerticalAlignment="Center"
                                FontFamily="Impact" Foreground="White"/>
-                    <TextBox Margin="5,0" Height="25" FontSize="16"/>
+                    <TextBox Text="{Binding Username}"
+                             Margin="5,0" Height="25" FontSize="16"/>
 
                     <TextBlock Text="Password" 
                                FontSize="24" Margin="5"
                                HorizontalAlignment="Left"
                                VerticalAlignment="Center"
                                FontFamily="Impact" Foreground="White"/>
-                    <TextBox Margin="5,0" Height="25" FontSize="16"/>
+                    <TextBox Text="{Binding Password}"
+                             Margin="5,0" Height="25" FontSize="16"/>
 
                     <TextBlock Text="Email" 
                                FontSize="24" Margin="5"
                                HorizontalAlignment="Left"
                                VerticalAlignment="Center"
                                FontFamily="Impact" Foreground="White"/>
-                    <TextBox Margin="5,0" Height="25" FontSize="16"/>
+                    <TextBox Text="{Binding Email}"
+                             Margin="5,0" Height="25" FontSize="16"/>
 
                     <Button Content="Register"
                             Margin="15" FontSize="21"
                             Height="35" Width="85"
                             HorizontalAlignment="Center"
-                            VerticalAlignment="Center"/>
+                            VerticalAlignment="Center"
+                            Command="{Binding GoToAccountCommand}"/>
 
-                    <TextBlock Text="Login" Foreground="DodgerBlue" 
-                               TextDecorations="Underline"
-                               FontSize="16"
-                               HorizontalAlignment="Center"/>
+                    <Button Foreground="DodgerBlue" Background="Transparent"
+                            FontSize="16"
+                            HorizontalAlignment="Center"
+                            BorderThickness="0"
+                            Command="{Binding ShowHiddenFormCommand}">
+
+                        <Button.Content>
+                            <TextBlock Text="Login"
+                                       TextDecorations="Underline"/>
+                        </Button.Content>
+
+                    </Button>
 
                 </StackPanel>
                 
@@ -85,7 +105,7 @@
         <Border Grid.Row="1" Grid.RowSpan="2" Grid.Column="1" 
                 Grid.ColumnSpan="2" BorderBrush="#CFCFCF" 
                 BorderThickness="1" Margin="5" CornerRadius="20"
-                Visibility="Visible">
+                Visibility="{Binding LoginVisibility}">
 
             <StackPanel>
 
@@ -96,6 +116,13 @@
                            FontFamily="Impact" Foreground="White"/>
 
                 <StackPanel Margin="5">
+                    <TextBlock Text="{Binding ResultMessage}"
+                               Foreground="Red" Margin="5"
+                               FontSize="16"
+                               HorizontalAlignment="Center"
+                               Visibility="{Binding IsErrorVisible, 
+                               Converter={StaticResource BooleanToVisibilityConverter}}"
+                               TextWrapping="Wrap"/>
 
                     <TextBlock Text="Email" 
                                FontSize="24" Margin="5"
@@ -120,10 +147,18 @@
                             VerticalAlignment="Center"
                             Command="{Binding GoToAccountCommand}"/>
 
-                    <TextBlock Text="Sign Up" Foreground="DodgerBlue" 
-                               TextDecorations="Underline"
-                               FontSize="16"
-                               HorizontalAlignment="Center"/>
+                    <Button Foreground="DodgerBlue" Background="Transparent"
+                            FontSize="16"
+                            HorizontalAlignment="Center"
+                            BorderThickness="0"
+                            Command="{Binding ShowHiddenFormCommand}">
+                        
+                        <Button.Content>
+                            <TextBlock Text="Sign Up"
+                                       TextDecorations="Underline"/>
+                        </Button.Content>
+                        
+                    </Button>
 
                 </StackPanel>
 

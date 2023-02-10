@@ -13,6 +13,8 @@
                 <ResourceDictionary Source="Resources/Themes/RadioButtonTheme.xaml"/>
             </ResourceDictionary.MergedDictionaries>
 
+            <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+
             <DataTemplate DataType="{x:Type viewModel:CanvasViewModel}">
                 <view:CanvasView/>
             </DataTemplate>
