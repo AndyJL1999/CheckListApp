@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows;
+using CheckListWPF.MVVM.Model;
 
 namespace CheckListWPF.MVVM.ViewModel.ActionViewModels
 {
@@ -91,13 +92,13 @@ namespace CheckListWPF.MVVM.ViewModel.ActionViewModels
 
         }
 
-        public void CloseWindow()
+        private void CloseWindow()
         {
             var w = Application.Current.MainWindow.OwnedWindows[0];
             w.Close();
         }
 
-        public async void CreateNewTaskBoard()
+        private async void CreateNewTaskBoard()
         {
             if (string.IsNullOrEmpty(Title) == false && Title.Length <= 25)
             {

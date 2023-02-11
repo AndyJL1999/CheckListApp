@@ -33,7 +33,7 @@
 
         <TextBlock Text="CheckList" Grid.Column="1" Grid.ColumnSpan="2"
                    HorizontalAlignment="Center" VerticalAlignment="Center"
-                   FontSize="24" FontFamily="Impact" Foreground="LightSteelBlue"/>
+                   FontSize="24" FontFamily="Impact" Foreground="AliceBlue"/>
 
         <Button Content="Logout 🚪" Grid.Column="3"
                 FontSize="21" Margin="15,0"

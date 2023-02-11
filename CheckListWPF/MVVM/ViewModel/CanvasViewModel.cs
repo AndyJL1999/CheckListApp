@@ -24,11 +24,13 @@ namespace CheckListWPF.MVVM.ViewModel
         private ICommand _openAccountCommand;
         private ICommand _openAddTaskBoardCommand;
         private ICommand _openAddTaskCommand;
+        private ICommand _renameBoardCommand;
         private ICommand _deleteBoardCommand;
         private ICommand _deleteTaskCommand;
+        private Visibility _editVisibility;
         private readonly ICheckListEndpoint _checkListEndpoint;
         private readonly IMapper _mapper;
-        private IEventAggregator _eventAggregator;
+        private readonly IEventAggregator _eventAggregator;
         private string _canvasTitle;
         private ObservableCollection<TaskBoardDisplayModel> _taskBoards;
 
@@ -42,6 +44,8 @@ namespace CheckListWPF.MVVM.ViewModel
 
             PageId = pageIndex;
             PageName = "CanvasView";
+
+            EditVisibility = Visibility.Collapsed;
 
             _eventAggregator.GetEvent<CanvasCarrierEvent>().Subscribe(c =>
             {
@@ -126,6 +130,19 @@ namespace CheckListWPF.MVVM.ViewModel
 
         }
 
+        public ICommand RenameBoardCommand
+        {
+            get
+            {
+                if(_renameBoardCommand is null)
+                {
+                    _renameBoardCommand = new RelayCommand(p => RenameBoard((TaskBoardDisplayModel)p), p => true);
+                }
+
+                return _renameBoardCommand;
+            }
+        }
+
         public ICommand DeleteBoardCommand
         {
             get
@@ -151,6 +168,17 @@ namespace CheckListWPF.MVVM.ViewModel
                 return _deleteTaskCommand;
             }
         }
+
+        public Visibility EditVisibility 
+        {
+            get { return _editVisibility; }
+            set
+            {
+                _editVisibility = value;
+                OnPropertyChanged(nameof(EditVisibility));
+            } 
+        }
+
         private void OpenAddTaskBoard()
         {
             OpenWindow(new CreateTaskBoardViewModel(_checkListEndpoint, _eventAggregator, CanvasId));
@@ -195,6 +223,11 @@ namespace CheckListWPF.MVVM.ViewModel
             var taskBoards = _mapper.Map<IEnumerable<TaskBoardDisplayModel>>(payload);
 
             TaskBoards = new ObservableCollection<TaskBoardDisplayModel>(taskBoards);
+        }
+
+        private async void RenameBoard(TaskBoardDisplayModel board)
+        {
+            EditVisibility = Visibility.Visible;
         }
     }
 }
