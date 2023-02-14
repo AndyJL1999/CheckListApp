@@ -22,6 +22,7 @@ namespace CheckListWPF.MVVM.ViewModel
     {
         private ICommand _openEditCommand;
         private ICommand _openAddCanvasCommand;
+        private ICommand _goToStartUpCommand;
         private ObservableCollection<CanvasDisplayModel> _canvasList;
         private CanvasDisplayModel _selectedCanvas;
         private readonly IApiHelper _apiHelper;
@@ -124,6 +125,28 @@ namespace CheckListWPF.MVVM.ViewModel
                 return _openAddCanvasCommand;
             }
 
+        }
+
+        public ICommand GoToStartUpCommand
+        {
+            get
+            {
+                if(_goToStartUpCommand is null)
+                {
+                    _goToStartUpCommand = new RelayCommand(p =>
+                    {
+                        _apiHelper.LoggedInUser.Email = string.Empty;
+                        _apiHelper.LoggedInUser.Username = string.Empty;
+                        _apiHelper.LoggedInUser.Token = string.Empty;
+                        _apiHelper.LoggedInUser.Id = 0;
+
+                        ViewChanged?.Invoke(this, new EventArgs<string>("0"));
+
+                    }, p => true);
+                }
+
+                return _goToStartUpCommand;
+            }
         }
 
         private void OpenAddCanvas()

@@ -41,7 +41,8 @@
                 HorizontalAlignment="Right"
                 VerticalAlignment="Center"
                 Background="Transparent"
-                Foreground="White" BorderThickness="0"/>
+                Foreground="White" BorderThickness="0"
+                Command="{Binding GoToStartUpCommand}"/>
 
         <TextBlock Text="{Binding UserWelcome}" Grid.Row="1" Grid.ColumnSpan="3" 
                    FontSize="26" Margin="15,0"

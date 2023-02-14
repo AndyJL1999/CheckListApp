@@ -176,6 +176,10 @@ namespace CheckListWPF.MVVM.ViewModel
 
                     _eventAggregator.GetEvent<LogOnEvent>().Publish();
 
+                    Username = string.Empty;
+                    Email = string.Empty;
+                    Password = string.Empty;
+
                     ViewChanged?.Invoke(this, new EventArgs<string>("1"));
                 }
                 else //on register form

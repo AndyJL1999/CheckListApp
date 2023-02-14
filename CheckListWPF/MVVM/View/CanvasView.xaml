@@ -88,6 +88,8 @@
                             <uc:TaskBoardControl TaskBoard="{Binding}"
                                                  AddCommandProp="{Binding Path=DataContext.OpenAddTaskCommand,
                                                  RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type UserControl}}}"
+                                                 EditTaskCommandProp="{Binding Path=DataContext.EditTaskCommand,
+                                                 RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type UserControl}}}"
                                                  DeleteCommandProp="{Binding Path=DataContext.DeleteBoardCommand,
                                                  RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type UserControl}}}"
                                                  DeleteTaskCommandProp="{Binding Path=DataContext.DeleteTaskCommand,
@@ -104,13 +106,6 @@
                                 </uc:TaskBoardControl.ContextMenu>
 
                             </uc:TaskBoardControl>
-
-                            <TextBox Text="{Binding Title, Mode=TwoWay}"
-                                     Background="Transparent"
-                                     Visibility="{Binding Source={x:Reference Name=CanvasParentControl},
-                                     Path=DataContext.EditVisibility}">
-
-                            </TextBox>
                             
                         </Grid>
                     </DataTemplate>

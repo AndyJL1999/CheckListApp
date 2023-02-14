@@ -33,6 +33,7 @@ namespace CheckListWPF.MVVM.ViewModel
         private readonly IEventAggregator _eventAggregator;
         private string _canvasTitle;
         private ObservableCollection<TaskBoardDisplayModel> _taskBoards;
+        private ICommand _editTaskCommand;
 
         public event EventHandler<EventArgs<string>>? ViewChanged;
 
@@ -143,13 +144,26 @@ namespace CheckListWPF.MVVM.ViewModel
             }
         }
 
+        public ICommand EditTaskCommand 
+        {
+            get
+            {
+                if(_editTaskCommand is null)
+                {
+                    _editTaskCommand = new RelayCommand(p => EditTask((TaskDisplayModel)p), p => true);
+                }
+
+                return _editTaskCommand;
+            }
+        }
+
         public ICommand DeleteBoardCommand
         {
             get
             {
                 if(_deleteBoardCommand is null)
                 {
-                    _deleteBoardCommand = new RelayCommand(p => DeleteTaskBoard((int)p), p => true);
+                    _deleteBoardCommand = new RelayCommand(p => DeleteTaskBoard((TaskBoardDisplayModel)p), p => true);
                 }
 
                 return _deleteBoardCommand;
@@ -189,28 +203,31 @@ namespace CheckListWPF.MVVM.ViewModel
             OpenWindow(new CreateTaskViewModel(_checkListEndpoint, _eventAggregator, boardId));
         }
 
-        private async void DeleteTaskBoard(int boardId)
+        private async void DeleteTaskBoard(TaskBoardDisplayModel taskBoard)
         {
-            await _checkListEndpoint.DeleteBoardFromCanvas(CanvasId, boardId);
-            _eventAggregator.GetEvent<ResetTaskBoardsEvent>().Publish();
+            if (taskBoard != null)
+            {
+                await _checkListEndpoint.DeleteBoardFromCanvas(CanvasId, taskBoard.Id);
+                TaskBoards.Remove(taskBoard);
+            }
         }
 
         private async void DeleteTask(TaskDisplayModel task)
         {
             await _checkListEndpoint.DeleteTaskFromBoard(task.BoardId, task.Id);
-            _eventAggregator.GetEvent<ResetTaskBoardsEvent>().Publish();
+            SetTaskBoardList();  
         }
 
-        private void OpenWindow(ObservableObject viewModel)
+        private void OpenWindow(ActionViewModel viewModel)
         {
-            if (App.Current.MainWindow.OwnedWindows.Count == 0)
+            if (Application.Current.MainWindow.OwnedWindows.Count == 0)
             {
                 var w = new Window();
                 w.WindowStyle = WindowStyle.None;
                 w.ResizeMode = ResizeMode.NoResize;
                 w.AllowsTransparency = true;
                 w.Background = new SolidColorBrush(Colors.Transparent);
-                w.Owner = App.Current.MainWindow;
+                w.Owner = Application.Current.MainWindow;
                 w.WindowStartupLocation = WindowStartupLocation.CenterOwner;
                 w.Content = viewModel;
                 w.ShowDialog();
@@ -225,9 +242,14 @@ namespace CheckListWPF.MVVM.ViewModel
             TaskBoards = new ObservableCollection<TaskBoardDisplayModel>(taskBoards);
         }
 
-        private async void RenameBoard(TaskBoardDisplayModel board)
+        private void RenameBoard(TaskBoardDisplayModel board)
         {
-            EditVisibility = Visibility.Visible;
+            OpenWindow(new EditTaskBoardViewModel(_checkListEndpoint, board));
+        }
+
+        private void EditTask(TaskDisplayModel task)
+        {
+            OpenWindow(new EditTaskViewModel(_checkListEndpoint, task));
         }
     }
 }
