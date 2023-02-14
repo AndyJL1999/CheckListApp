@@ -1,6 +1,7 @@
 ﻿using CheckListApi.DTOs.PostDtos;
 using CheckListApi.DTOs.PutDtos;
 using CheckListApi.Models;
+using CheckListWPF.MVVM.Model;
 using CheckListWPF.Resources.Interfaces;
 using Microsoft.Extensions.Caching.Memory;
 using System;
@@ -146,6 +147,32 @@ namespace CheckListWPF.Resources.Helpers
             var content = JsonContent.Create(newBoard);
 
             using (HttpResponseMessage response = await _apiHelper.ApiClient.PutAsync(_apiHelper.ApiClient.BaseAddress + $"CheckList/UpdateTaskBoard", content))
+            {
+                if (response.IsSuccessStatusCode)
+                {
+
+                }
+                else
+                {
+                    throw new Exception(response.ReasonPhrase);
+                }
+            }
+        }
+
+        public async Task UpdateTask(TaskDisplayModel task)
+        {
+            var newTask = new UpdateTaskDto
+            {
+                Id = task.Id,
+                Title = task.Title,
+                Description = task.Description,
+                InProgress = task.InProgress,
+                IsDone = task.IsDone
+            };
+
+            var content = JsonContent.Create(newTask);
+
+            using (HttpResponseMessage response = await _apiHelper.ApiClient.PutAsync(_apiHelper.ApiClient.BaseAddress + $"CheckList/UpdateTask", content))
             {
                 if (response.IsSuccessStatusCode)
                 {

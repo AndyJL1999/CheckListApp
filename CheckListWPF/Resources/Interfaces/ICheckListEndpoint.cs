@@ -1,4 +1,5 @@
 ﻿using CheckListApi.Models;
+using CheckListWPF.MVVM.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +16,7 @@ namespace CheckListWPF.Resources.Interfaces
         Task<IEnumerable<TaskBoard>> GetCanvasTaskBoardList(int canvasId);
         Task AddTaskToBoard(string title, string description, int boardId);
         Task UpdateBoard(int boardId, string newTitle);
+        Task UpdateTask(TaskDisplayModel task);
         Task DeleteBoardFromCanvas(int canvasId, int boardId);
         Task DeleteTaskFromBoard(int boardId, int taskId);
     }
