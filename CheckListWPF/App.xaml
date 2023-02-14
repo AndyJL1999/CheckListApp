@@ -43,6 +43,14 @@
                 <actionView:CreateTaskControl/>
             </DataTemplate>
 
+            <DataTemplate DataType="{x:Type actionVM:EditTaskBoardViewModel}">
+                <actionView:EditTaskBoardView/>
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type actionVM:EditTaskViewModel}">
+                <actionView:EditTaskView/>
+            </DataTemplate>
+
 
         </ResourceDictionary>
     </Application.Resources>

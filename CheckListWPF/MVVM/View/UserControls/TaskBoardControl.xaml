@@ -4,7 +4,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:CheckListWPF.MVVM.View.UserControls"
-             mc:Ignorable="d">
+             mc:Ignorable="d"
+             Name="BoardParentRoot">
 
     <Border CornerRadius="10" Margin="15,0" Background="LightGray" 
             BorderThickness="0">
@@ -45,7 +46,22 @@
                     <DataTemplate>
                         <local:TaskControl Task="{Binding}"
                                            DeleteTaskProp="{Binding Path=DeleteTaskCommandProp,
-                                           RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:TaskBoardControl}}}"/>
+                                           RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:TaskBoardControl}}}">
+
+                            <local:TaskControl.ContextMenu>
+                                
+                                <ContextMenu>
+                                    <MenuItem Header="Edit Task"
+                                              Command="{Binding Source={x:Reference Name=BoardParentRoot},
+                                              Path=EditTaskCommandProp}"
+                                              CommandParameter="{Binding}"/>
+                                </ContextMenu>
+                                
+                            </local:TaskControl.ContextMenu>
+                            
+                        </local:TaskControl>
+                        
+                        
                     </DataTemplate>
                 </ListView.ItemTemplate>
                 
@@ -72,8 +88,7 @@
                     Background="Transparent" BorderThickness="0"
                     Command="{Binding Path=DeleteCommandProp,
                     RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:TaskBoardControl}}}"
-                    CommandParameter="{Binding Path=BoardId,
-                    RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:TaskBoardControl}}}"/>
+                    CommandParameter="{Binding}"/>
 
         </Grid>
         

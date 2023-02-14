@@ -30,8 +30,7 @@
                     BorderThickness="0"
                     Command="{Binding Path=DeleteTaskProp,
                     RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:TaskControl}}}"
-                    CommandParameter="{Binding Path=Task,
-                    RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=local:TaskControl}}"/>
+                    CommandParameter="{Binding}"/>
 
 
             <TextBlock Text="{Binding Description}"

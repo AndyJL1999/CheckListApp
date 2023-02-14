@@ -80,6 +80,21 @@ namespace CheckListWPF.MVVM.View.UserControls
 
 
 
+
+        public ICommand EditTaskCommandProp
+        {
+            get { return (ICommand)GetValue(EditTaskCommandPropProperty); }
+            set { SetValue(EditTaskCommandPropProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for EditTaskCommandProp.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty EditTaskCommandPropProperty =
+            DependencyProperty.Register("EditTaskCommandProp", typeof(ICommand), typeof(TaskBoardControl), new PropertyMetadata(null));
+
+
+
+
+
         private ICommand _collapseBoardCommand;
         private Visibility _boardVisibility;
 
