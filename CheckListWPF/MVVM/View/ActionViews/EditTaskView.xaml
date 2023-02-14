@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="CheckListWPF.MVVM.View.ActionViews.CreateTaskControl"
+﻿<UserControl x:Class="CheckListWPF.MVVM.View.ActionViews.EditTaskView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -23,7 +23,7 @@
 
             <StackPanel Grid.Row="1" Grid.Column="1">
 
-                <TextBlock Text="Add Task" Margin="0,0,0,5"
+                <TextBlock Text="Edit Task" Margin="0,0,0,5"
                            FontSize="21" FontFamily="Impact"
                            Foreground="White"/>
                 <TextBlock Text="{Binding ErrorMessage}" FontSize="10" 
@@ -42,10 +42,10 @@
 
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
 
-                    <Button Content="Add" Margin="10"
+                    <Button Content="Update" Margin="10"
                             FontSize="16" Width="65"
                             Background="LimeGreen"
-                            Command="{Binding CreateTaskCommand}"/>
+                            Command="{Binding EditTaskCommand}"/>
                     <Button Content="Cancel" Margin="10"
                             FontSize="16" Width="65"
                             Background="Red"
@@ -57,5 +57,4 @@
 
         </Grid>
     </Border>
-    
 </UserControl>

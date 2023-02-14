@@ -1,35 +1,33 @@
-﻿using CheckListWPF.Resources;
-using CheckListWPF.Resources.EventAggregators;
+﻿using CheckListApi.Models;
+using CheckListWPF.MVVM.Model;
+using CheckListWPF.Resources;
 using CheckListWPF.Resources.Interfaces;
-using Prism.Events;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Input;
 using System.Windows;
-using CheckListWPF.MVVM.Model;
+using System.Windows.Input;
 
 namespace CheckListWPF.MVVM.ViewModel.ActionViewModels
 {
-    public class CreateTaskBoardViewModel : ActionViewModel
+    public class EditTaskViewModel : ActionViewModel
     {
         private readonly ICheckListEndpoint _checkListEndpoint;
-        private readonly IEventAggregator _eventAggregator;
-        private ICommand _createTaskBoardCommand;
+        private readonly TaskDisplayModel _task;
         private string _title;
+        private string _description;
+        private ICommand _editTaskCommand;
 
-        public CreateTaskBoardViewModel(ICheckListEndpoint checkListEndpoint, IEventAggregator eventAggregator, int canvasId)
+        public EditTaskViewModel(ICheckListEndpoint checkListEndpoint, TaskDisplayModel task)
         {
             _checkListEndpoint = checkListEndpoint;
-            _eventAggregator = eventAggregator;
+            _task = task;
 
-            ErrorVisibility = Visibility.Collapsed;
-            CanvasId = canvasId;
+            Title = task.Title;
+            Description = task.Description;
         }
-
-        public int CanvasId { get; set; }
 
         public string Title
         {
@@ -41,29 +39,39 @@ namespace CheckListWPF.MVVM.ViewModel.ActionViewModels
             }
         }
 
-        public ICommand CreateTaskBoardCommand
+        public string Description
+        {
+            get { return _description; }
+            set
+            {
+                _description = value;
+                OnPropertyChanged(nameof(Description));
+            }
+        }
+
+        public ICommand EditTaskCommand
         {
             get
             {
-                if (_createTaskBoardCommand is null)
+                if (_editTaskCommand is null)
                 {
-                    _createTaskBoardCommand = new RelayCommand(p => CreateNewTaskBoard(), p => true);
+                    _editTaskCommand = new RelayCommand(p => EditTask(), p => true);
                 }
 
-                return _createTaskBoardCommand;
+                return _editTaskCommand;
             }
-
         }
 
-        private async void CreateNewTaskBoard()
+        private async void EditTask()
         {
             if (string.IsNullOrEmpty(Title) == false && Title.Length <= 25)
             {
                 ErrorVisibility = Visibility.Collapsed;
 
-                await _checkListEndpoint.AddTaskBoardToCanvas(Title, CanvasId);
+                _task.Title = Title;
+                _task.Description = Description;
 
-                _eventAggregator.GetEvent<ResetTaskBoardsEvent>().Publish();
+                await _checkListEndpoint.UpdateTask(_task);
 
                 CloseWindow();
             }

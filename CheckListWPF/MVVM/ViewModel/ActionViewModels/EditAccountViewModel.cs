@@ -8,33 +8,12 @@ using System.Windows.Input;
 
 namespace CheckListWPF.MVVM.ViewModel.ActionViewModels
 {
-    public class EditAccountViewModel : ObservableObject
+    public class EditAccountViewModel : ActionViewModel
     {
-        private ICommand _closeWindowCommand;
 
         public EditAccountViewModel()
         {
 
-        }
-
-        public ICommand CloseWindowCommand
-        {
-            get
-            {
-                if (_closeWindowCommand is null)
-                {
-                    _closeWindowCommand = new RelayCommand(p => CloseWindow(), p => true);
-                }
-
-                return _closeWindowCommand;
-            }
-
-        }
-
-        public void CloseWindow()
-        {
-            var w = System.Windows.Application.Current.MainWindow.OwnedWindows[0];
-            w.Close();
         }
     }
 }

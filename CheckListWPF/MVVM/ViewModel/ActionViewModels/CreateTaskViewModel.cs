@@ -12,15 +12,12 @@ using System.Windows;
 
 namespace CheckListWPF.MVVM.ViewModel.ActionViewModels
 {
-    public class CreateTaskViewModel : ObservableObject
+    public class CreateTaskViewModel : ActionViewModel
     {
         
         private readonly ICheckListEndpoint _checkListEndpoint;
         private readonly IEventAggregator _eventAggregator;
-        private ICommand _closeWindowCommand;
         private ICommand _createTaskCommand;
-        private Visibility _errorVisibility;
-        private string _errorMessage;
         private string _title;
         private string _description;
         private bool _inProgress;
@@ -36,16 +33,6 @@ namespace CheckListWPF.MVVM.ViewModel.ActionViewModels
         }
 
         public int BoardId { get; set; }
-
-        public string ErrorMessage
-        {
-            get { return _errorMessage; }
-            set
-            {
-                _errorMessage = value;
-                OnPropertyChanged(nameof(ErrorMessage));
-            }
-        }
 
         public string Title
         {
@@ -87,29 +74,6 @@ namespace CheckListWPF.MVVM.ViewModel.ActionViewModels
             }
         }
 
-        public Visibility ErrorVisibility
-        {
-            get { return _errorVisibility; }
-            set
-            {
-                _errorVisibility = value;
-                OnPropertyChanged(nameof(ErrorVisibility));
-            }
-        }
-
-        public ICommand CloseWindowCommand
-        {
-            get
-            {
-                if (_closeWindowCommand is null)
-                {
-                    _closeWindowCommand = new RelayCommand(p => CloseWindow(), p => true);
-                }
-
-                return _closeWindowCommand;
-            }
-
-        }
 
         public ICommand CreateTaskCommand
         {
@@ -123,12 +87,6 @@ namespace CheckListWPF.MVVM.ViewModel.ActionViewModels
                 return _createTaskCommand;
             }
 
-        }
-
-        public void CloseWindow()
-        {
-            var w = Application.Current.MainWindow.OwnedWindows[0];
-            w.Close();
         }
 
         public async void CreateNewTask()
