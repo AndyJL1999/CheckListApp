@@ -17,7 +17,7 @@
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="0.1*"/>
-                <RowDefinition Height="0.8*"/>
+                <RowDefinition Height="auto"/>
                 <RowDefinition Height="0.1*"/>
             </Grid.RowDefinitions>
 
@@ -38,6 +38,31 @@
                 <TextBlock Text="Description" FontSize="14"
                            FontFamily="Impact" Foreground="White"/>
                 <TextBox Text="{Binding Description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+
+                    <RadioButton Content="Done" Margin="1"
+                                 FontSize="8" 
+                                 Background="LimeGreen"
+                                 VerticalAlignment="Center"
+                                 VerticalContentAlignment="Center"
+                                 Command="{Binding CheckDoneCommand}"/>
+                    
+                    <RadioButton Content="In-Progress" Margin="5"
+                                 FontSize="8"
+                                 Background="Orange"
+                                 VerticalAlignment="Center"
+                                 VerticalContentAlignment="Center"
+                                 Command="{Binding CheckInProgressCommand}"/>
+                    
+                    <RadioButton Content="Not started" Margin="5"
+                                 FontSize="8"
+                                 Background="Red"
+                                 VerticalAlignment="Center"
+                                 VerticalContentAlignment="Center"
+                                 Command="{Binding CheckNotStartedCommand}"/>
+
+                </StackPanel>
 
 
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
