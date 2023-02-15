@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows;
+using CheckListWPF.MVVM.Model;
 
 namespace CheckListWPF.MVVM.ViewModel.ActionViewModels
 {
@@ -20,8 +21,6 @@ namespace CheckListWPF.MVVM.ViewModel.ActionViewModels
         private ICommand _createTaskCommand;
         private string _title;
         private string _description;
-        private bool _inProgress;
-        private bool _isDone;
 
         public CreateTaskViewModel(ICheckListEndpoint checkListEndpoint, IEventAggregator eventAggregator, int boardId)
         {
@@ -54,27 +53,6 @@ namespace CheckListWPF.MVVM.ViewModel.ActionViewModels
             }
         }
 
-        public bool InProgress 
-        {
-            get { return _inProgress; }
-            set
-            {
-                _inProgress = value;
-                OnPropertyChanged(nameof(InProgress));
-            }
-        }
-
-        public bool IsDone 
-        { 
-            get { return _isDone; }
-            set
-            {
-                _isDone = value;
-                OnPropertyChanged(nameof(IsDone));
-            }
-        }
-
-
         public ICommand CreateTaskCommand
         {
             get
@@ -97,7 +75,15 @@ namespace CheckListWPF.MVVM.ViewModel.ActionViewModels
 
                 await _checkListEndpoint.AddTaskToBoard(Title, Description, BoardId);
 
-                _eventAggregator.GetEvent<ResetTaskBoardsEvent>().Publish();
+                _eventAggregator.GetEvent<AddTaskEvent>().Publish(new TaskDisplayModel
+                {
+                    Title = Title,
+                    Description = Description,
+                    BoardId = BoardId,
+                    NotStarted = true,
+                    InProgress = false,
+                    IsDone = false
+                });
 
                 CloseWindow();
             }

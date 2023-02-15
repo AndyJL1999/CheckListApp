@@ -61,9 +61,14 @@ namespace CheckListWPF.MVVM.ViewModel.ActionViewModels
             {
                 ErrorVisibility = Visibility.Collapsed;
 
-                await _checkListEndpoint.AddTaskBoardToCanvas(Title, CanvasId);
+                //await _checkListEndpoint.AddTaskBoardToCanvas(Title, CanvasId);
 
-                _eventAggregator.GetEvent<ResetTaskBoardsEvent>().Publish();
+                _eventAggregator.GetEvent<AddTaskBoardEvent>().Publish(new TaskBoardDisplayModel
+                {
+                    Title = Title,
+                    CanvasId = CanvasId,
+                    Tasks = new List<TaskDisplayModel>()
+                });
 
                 CloseWindow();
             }
