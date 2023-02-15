@@ -166,6 +166,7 @@ namespace CheckListWPF.Resources.Helpers
                 Id = task.Id,
                 Title = task.Title,
                 Description = task.Description,
+                NotStarted = task.NotStarted,
                 InProgress = task.InProgress,
                 IsDone = task.IsDone
             };
