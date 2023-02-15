@@ -1,4 +1,5 @@
 ﻿using CheckListApi.Models;
+using CheckListWPF.Resources;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace CheckListWPF.MVVM.Model
 {
-    public class TaskBoardDisplayModel :INotifyPropertyChanged
+    public class TaskBoardDisplayModel : ObservableObject
     {
         private string _title;
         private List<TaskDisplayModel> _tasks;
@@ -24,7 +25,7 @@ namespace CheckListWPF.MVVM.Model
             set
             {
                 _title = value;
-                INotifyPropertyChanged(nameof(Title));
+                OnPropertyChanged(nameof(Title));
             }
         }
         public List<TaskDisplayModel> Tasks
@@ -33,17 +34,7 @@ namespace CheckListWPF.MVVM.Model
             set
             {
                 _tasks = value;
-                INotifyPropertyChanged(nameof(Tasks));
-            }
-        }
-
-        public event PropertyChangedEventHandler? PropertyChanged;
-
-        private void INotifyPropertyChanged(string v)
-        {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(v));
+                OnPropertyChanged(nameof(Tasks));
             }
         }
     }

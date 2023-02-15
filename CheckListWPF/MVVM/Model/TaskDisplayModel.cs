@@ -1,4 +1,5 @@
 ﻿using CheckListApi.Models;
+using CheckListWPF.Resources;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -9,10 +10,11 @@ using System.Threading.Tasks;
 
 namespace CheckListWPF.MVVM.Model
 {
-    public class TaskDisplayModel : INotifyPropertyChanged
+    public class TaskDisplayModel : ObservableObject
     {
         private string _title;
         private string _description;
+        private bool _notStarted;
         private bool _inProgress;
         private bool _isDone;
         private TaskBoardDisplayModel _board;
@@ -25,7 +27,7 @@ namespace CheckListWPF.MVVM.Model
             set
             {
                 _board = value;
-                INotifyPropertyChanged(nameof(Board));
+                OnPropertyChanged(nameof(Board));
             }
         }
         public string Title
@@ -34,7 +36,7 @@ namespace CheckListWPF.MVVM.Model
             set
             {
                 _title = value;
-                INotifyPropertyChanged(nameof(Title));
+                OnPropertyChanged(nameof(Title));
             }
         }
         public string Description 
@@ -43,7 +45,16 @@ namespace CheckListWPF.MVVM.Model
             set
             {
                 _description = value;
-                INotifyPropertyChanged(nameof(Description));
+                OnPropertyChanged(nameof(Description));
+            }
+        }
+        public bool NotStarted
+        {
+            get { return _notStarted; }
+            set
+            {
+                _notStarted = value;
+                OnPropertyChanged(nameof(NotStarted));
             }
         }
         public bool InProgress 
@@ -52,7 +63,7 @@ namespace CheckListWPF.MVVM.Model
             set
             {
                 _inProgress = value;
-                INotifyPropertyChanged(nameof(InProgress));
+                OnPropertyChanged(nameof(InProgress));
             }
         } 
         public bool IsDone 
@@ -61,18 +72,9 @@ namespace CheckListWPF.MVVM.Model
             set
             {
                 _isDone = value;
-                INotifyPropertyChanged(nameof(IsDone));
+                OnPropertyChanged(nameof(IsDone));
             }
         } 
 
-        public event PropertyChangedEventHandler? PropertyChanged;
-
-        private void INotifyPropertyChanged(string v)
-        {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(v));
-            }
-        }
     }
 }

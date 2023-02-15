@@ -92,9 +92,6 @@ namespace CheckListWPF.MVVM.View.UserControls
             DependencyProperty.Register("EditTaskCommandProp", typeof(ICommand), typeof(TaskBoardControl), new PropertyMetadata(null));
 
 
-
-
-
         private ICommand _collapseBoardCommand;
         private Visibility _boardVisibility;
 
