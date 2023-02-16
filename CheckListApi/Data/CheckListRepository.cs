@@ -33,7 +33,7 @@ namespace CheckListApi.Data
             await _context.SaveChangesAsync();
         }
 
-        public async Task AddTaskBoardToCanvas(AddTaskBoardDto taskBoardDto)
+        public async Task<int> AddTaskBoardToCanvas(AddTaskBoardDto taskBoardDto)
         {
             var taskBoard = _mapper.Map<TaskBoard>(taskBoardDto);
 
@@ -45,9 +45,11 @@ namespace CheckListApi.Data
 
             _context.TaskBoards.Add(taskBoard);
             await _context.SaveChangesAsync();
+
+            return taskBoard.Id;
         }
 
-        public async Task AddTaskToBoard(AddTaskDto taskDto)
+        public async Task<int> AddTaskToBoard(AddTaskDto taskDto)
         {
             var task = _mapper.Map<MyTask>(taskDto);
 
@@ -59,6 +61,8 @@ namespace CheckListApi.Data
 
             _context.Tasks.Add(task);
             await _context.SaveChangesAsync();
+
+            return task.Id;
         }
         #endregion
 

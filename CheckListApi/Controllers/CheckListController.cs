@@ -48,19 +48,15 @@ namespace CheckListApi.Controllers
         }
 
         [HttpPost("AddTaskBoard")]
-        public async Task<ActionResult> AddTaskBoard(AddTaskBoardDto taskBoardDto)
+        public async Task<ActionResult<int>> AddTaskBoard(AddTaskBoardDto taskBoardDto)
         {
-            await _checkListRepo.AddTaskBoardToCanvas(taskBoardDto);
-
-            return Ok("TaskBoard Added!");
+            return Ok(await _checkListRepo.AddTaskBoardToCanvas(taskBoardDto));
         }
 
         [HttpPost("AddTask")]
-        public async Task<ActionResult> AddTask(AddTaskDto taskDto)
+        public async Task<ActionResult<int>> AddTask(AddTaskDto taskDto)
         {
-            await _checkListRepo.AddTaskToBoard(taskDto);
-
-            return Ok("Task Added!");
+            return Ok(await _checkListRepo.AddTaskToBoard(taskDto));
         }
         #endregion
 
