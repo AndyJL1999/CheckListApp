@@ -1,7 +1,9 @@
 ﻿using CheckListApi.Models;
 using CheckListWPF.Resources;
+using CheckListWPF.Resources.EventAggregators;
 using CheckListWPF.Resources.Helpers;
 using CheckListWPF.Resources.Interfaces;
+using Prism.Events;
 using System;
 using System.CodeDom;
 using System.Collections.Generic;
@@ -17,6 +19,7 @@ namespace CheckListWPF.MVVM.ViewModel.ActionViewModels
     {
         #region ----------Fields----------
         private readonly IApiHelper _apiHelper;
+        private readonly IEventAggregator _eventAggregator;
         private ICommand _editAccountCommand;
         private ICommand _showHiddenFormCommand;
         private Visibility _changePasswordVisibility;
@@ -29,9 +32,10 @@ namespace CheckListWPF.MVVM.ViewModel.ActionViewModels
         private bool _onEditAccountView;
         #endregion
 
-        public EditAccountViewModel(IApiHelper apiHelper)
+        public EditAccountViewModel(IApiHelper apiHelper, IEventAggregator eventAggregator)
         {
             _apiHelper = apiHelper;
+            _eventAggregator = eventAggregator;
             _onEditAccountView = true;
 
             ChangePasswordVisibility = Visibility.Collapsed;
@@ -151,6 +155,8 @@ namespace CheckListWPF.MVVM.ViewModel.ActionViewModels
                     ErrorVisibility = Visibility.Collapsed;
 
                     await _apiHelper.UpdateUser(Username, Email);
+
+                    _eventAggregator.GetEvent<UpdateAccountEvent>().Publish() ;
 
                     CloseWindow();
                 }

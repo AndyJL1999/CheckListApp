@@ -51,6 +51,10 @@
                 <actionView:EditTaskView/>
             </DataTemplate>
 
+            <DataTemplate DataType="{x:Type actionVM:EditCanvasViewModel}">
+                <actionView:EditCanvasView/>
+            </DataTemplate>
+
 
         </ResourceDictionary>
     </Application.Resources>

@@ -12,9 +12,10 @@ namespace CheckListWPF.Resources.Interfaces
     {
         Task<IEnumerable<Canvas>> GetUserCanvasList();
         Task AddCanvasToList(string title);
-        Task AddTaskBoardToCanvas(string title, int canvasId);
+        Task<int> AddTaskBoardToCanvas(string title, int canvasId);
         Task<IEnumerable<TaskBoard>> GetCanvasTaskBoardList(int canvasId);
-        Task AddTaskToBoard(string title, string description, int boardId);
+        Task<int> AddTaskToBoard(string title, string description, int boardId);
+        Task UpdateCanvas(int canvasId, string newTitle);
         Task UpdateBoard(int boardId, string newTitle);
         Task UpdateTask(TaskDisplayModel task);
         Task DeleteBoardFromCanvas(int canvasId, int boardId);

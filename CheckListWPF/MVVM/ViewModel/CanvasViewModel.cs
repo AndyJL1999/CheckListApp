@@ -29,6 +29,7 @@ namespace CheckListWPF.MVVM.ViewModel
         private ICommand _deleteBoardCommand;
         private ICommand _deleteTaskCommand;
         private Visibility _editVisibility;
+        private Visibility _spinnerVisibility;
         private readonly ICheckListEndpoint _checkListEndpoint;
         private readonly IMapper _mapper;
         private readonly IEventAggregator _eventAggregator;
@@ -210,6 +211,16 @@ namespace CheckListWPF.MVVM.ViewModel
                 OnPropertyChanged(nameof(EditVisibility));
             } 
         }
+
+        public Visibility SpinnerVisibility 
+        {
+            get { return _spinnerVisibility; }
+            set
+            {
+                _spinnerVisibility = value;
+                OnPropertyChanged(nameof(SpinnerVisibility));
+            }
+        }
         #endregion
 
         #region ----------Methods----------
@@ -274,6 +285,12 @@ namespace CheckListWPF.MVVM.ViewModel
 
                 TaskBoards = new ObservableCollection<TaskBoardDisplayModel>(taskBoards);
             }
+            else
+            {
+                SpinnerVisibility = Visibility.Visible;
+            }
+
+            SpinnerVisibility = Visibility.Collapsed;
         }
 
         private void RenameBoard(TaskBoardDisplayModel board)

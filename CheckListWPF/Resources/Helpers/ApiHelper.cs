@@ -133,6 +133,8 @@ namespace CheckListWPF.Resources.Helpers
             {
                 if (response.IsSuccessStatusCode)
                 {
+                    _loggedInUser.Username = username;
+                    _loggedInUser.Email = email;
                     return await response.Content.ReadAsStringAsync();
                 }
                 else

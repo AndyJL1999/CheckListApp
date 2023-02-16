@@ -17,18 +17,20 @@ namespace CheckListWPF.MVVM.ViewModel
     public class StartUpViewModel : ObservableObject, IPageViewModel
     {
         #region ----------Fields----------
-        private string _username;
-        private string _email;
-        private string _password;
-        private string _resultMessage;
-        private ICommand _goToAccountCommand;
-        private ICommand _showHiddenFormCommand;
-        private Visibility _signUpVisibility;
-        private Visibility _loginVisibility;
-        private bool _onLoginForm;
-        private SolidColorBrush _resultColor;
-        private readonly IApiHelper _apiHelper;
-        private readonly IEventAggregator _eventAggregator;
+        private string _username;                                // username container
+        private string _email;                                   // email container
+        private string _password;                                // password container
+        private string _resultMessage;                           // the message that is returned after a call to the api
+        private ICommand _goToAccountCommand;                    // command for login button
+        private ICommand _showHiddenFormCommand;                 // command to switch between forms
+        private Visibility _signUpVisibility;                    // used to change signUp form visibility
+        private Visibility _loginVisibility;                     // used to change login form visibility
+        private Visibility _spinnerVisibility;                   // used to change loading spinner visibility
+        private bool _onLoginForm;                               // used to determine which form is currently shown
+        private bool _enableButton;                              // used to disable login and register button 
+        private SolidColorBrush _resultColor;                    // used to change ResultMessage color
+        private readonly IApiHelper _apiHelper;                  // used to access api calls for user
+        private readonly IEventAggregator _eventAggregator;      // used to access events to communicate with other view models
         #endregion
 
         public event EventHandler<EventArgs<string>>? ViewChanged;
@@ -45,10 +47,13 @@ namespace CheckListWPF.MVVM.ViewModel
 
             SignUpVisibility = Visibility.Visible;
             LoginVisibility = Visibility.Collapsed;
+            SpinnerVisibility = Visibility.Collapsed;
 
             Username = string.Empty;
             Email = string.Empty;
             Password = string.Empty;
+
+            EnableButton = true;
         }
 
         #region ----------Properties----------
@@ -120,6 +125,16 @@ namespace CheckListWPF.MVVM.ViewModel
             }
         }
 
+        public bool EnableButton 
+        { 
+            get { return _enableButton; }
+            set
+            {
+                _enableButton = value;
+                OnPropertyChanged(nameof(EnableButton));
+            }
+        }
+
         public Visibility LoginVisibility
         {
             get { return _loginVisibility; }
@@ -137,6 +152,16 @@ namespace CheckListWPF.MVVM.ViewModel
             {
                 _signUpVisibility = value;
                 OnPropertyChanged(nameof(SignUpVisibility));
+            }
+        }
+
+        public Visibility SpinnerVisibility
+        {
+            get { return _spinnerVisibility; }
+            set
+            {
+                _spinnerVisibility = value;
+                OnPropertyChanged(nameof(SpinnerVisibility));
             }
         }
 
@@ -168,11 +193,14 @@ namespace CheckListWPF.MVVM.ViewModel
         #endregion
 
         #region ----------Methods----------
-        //TODO - make it so the button can't be pressed a second time during api call
         private async Task ChangeView()
         {
+            SpinnerVisibility = Visibility.Visible;
+            EnableButton = false;
+
             try
             {
+
                 if (_onLoginForm)
                 {
                     ResultMessage = string.Empty;
@@ -216,6 +244,9 @@ namespace CheckListWPF.MVVM.ViewModel
                     ResultMessage = ex.Message.Trim('"');
                 }
             }
+
+            SpinnerVisibility = Visibility.Collapsed;
+            EnableButton = true;
         }
 
         private void ShowForm()

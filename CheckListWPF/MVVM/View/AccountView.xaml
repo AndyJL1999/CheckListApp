@@ -6,7 +6,8 @@
              xmlns:local="clr-namespace:CheckListWPF.MVVM.View"
              xmlns:uc="clr-namespace:CheckListWPF.MVVM.View.UserControls"
              mc:Ignorable="d" 
-             d:DesignHeight="600" d:DesignWidth="800">
+             d:DesignHeight="600" d:DesignWidth="800"
+             Name="AccountParentControl">
     
     <Grid Background="CadetBlue">
 
@@ -72,9 +73,10 @@
             <TextBlock Text="Email" Margin="15,5"
                        FontFamily="Impact" FontSize="21"
                        Foreground="White"/>
-            <TextBlock Text="Email@www.com" Margin="15,0"
+            <TextBlock Text="{Binding Email}" Margin="15,0"
                        FontFamily="Impact" FontSize="18"
-                       Foreground="White"/>
+                       Foreground="White"
+                       d:Text="Email@mymail.com"/>
 
             <TextBlock Text="Password" Margin="15,5,15,0"
                        FontFamily="Impact" FontSize="21"
@@ -118,7 +120,16 @@
 
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <uc:CanvasControl Canvas="{Binding}"/>
+                    <uc:CanvasControl Canvas="{Binding}">
+                        <uc:CanvasControl.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem Header="Rename Canvas"
+                                          Command="{Binding Source={x:Reference Name=AccountParentControl},
+                                          Path=DataContext.RenameCanvasCommand}"
+                                          CommandParameter="{Binding}"/>
+                            </ContextMenu>
+                        </uc:CanvasControl.ContextMenu>
+                    </uc:CanvasControl>
                 </DataTemplate>
             </ListView.ItemTemplate>
             

@@ -30,6 +30,8 @@ namespace CheckListWPF.MVVM.ViewModel.ActionViewModels
 
             ErrorVisibility = Visibility.Collapsed;
             BoardId = boardId;
+
+            Description = string.Empty;
         }
 
         #region ----------Properties----------
@@ -77,10 +79,11 @@ namespace CheckListWPF.MVVM.ViewModel.ActionViewModels
             {
                 ErrorVisibility = Visibility.Collapsed;
 
-                await _checkListEndpoint.AddTaskToBoard(Title, Description, BoardId);
+                var taskId = await _checkListEndpoint.AddTaskToBoard(Title, Description, BoardId);
 
                 _eventAggregator.GetEvent<AddTaskEvent>().Publish(new TaskDisplayModel
                 {
+                    Id = taskId,
                     Title = Title,
                     Description = Description,
                     BoardId = BoardId,

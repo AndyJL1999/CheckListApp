@@ -23,6 +23,7 @@ namespace CheckListWPF.MVVM.ViewModel
         #region ----------Fields----------
         private ICommand _openEditCommand;
         private ICommand _openAddCanvasCommand;
+        private ICommand _renameCanvasCommand;
         private ICommand _goToStartUpCommand;
         private ObservableCollection<CanvasDisplayModel> _canvasList;
         private CanvasDisplayModel _selectedCanvas;
@@ -31,6 +32,7 @@ namespace CheckListWPF.MVVM.ViewModel
         private readonly IMapper _mapper;
         private readonly IEventAggregator _eventAggregator;
         private string _userWelcome;
+        private string _email;
         #endregion
 
         public event EventHandler<EventArgs<string>>? ViewChanged;
@@ -49,6 +51,7 @@ namespace CheckListWPF.MVVM.ViewModel
             _eventAggregator.GetEvent<LogOnEvent>().Subscribe(() => {
 
                 _userWelcome = _apiHelper.LoggedInUser.Username;
+                _email = _apiHelper.LoggedInUser.Email;
                 SetCanvasList();
             });
 
@@ -58,11 +61,26 @@ namespace CheckListWPF.MVVM.ViewModel
                 SelectedCanvas = null;
                 SetCanvasList();
             });
+
+            _eventAggregator.GetEvent<UpdateAccountEvent>().Subscribe(() =>
+            {
+                UserWelcome = _apiHelper.LoggedInUser.Username;
+                Email = _apiHelper.LoggedInUser.Email;
+            });
         }
 
         #region ----------Properties----------
         public string PageId { get; set; }
         public string PageName { get; set; }
+        public string Email 
+        {
+            get { return _email; }
+            set
+            {
+                _email = value;
+                OnPropertyChanged(nameof(Email));
+            } 
+        }
 
         public string UserWelcome 
         { 
@@ -130,6 +148,19 @@ namespace CheckListWPF.MVVM.ViewModel
 
         }
 
+        public ICommand RenameCanvasCommand
+        {
+            get
+            {
+                if (_renameCanvasCommand is null)
+                {
+                    _renameCanvasCommand = new RelayCommand(p => RenameCanvas((CanvasDisplayModel)p), p => true);
+                }
+
+                return _renameCanvasCommand;
+            }
+        }
+
         public ICommand GoToStartUpCommand
         {
             get
@@ -161,7 +192,12 @@ namespace CheckListWPF.MVVM.ViewModel
 
         private void OpenEditAccount()
         {
-            OpenWindow(new EditAccountViewModel(_apiHelper));
+            OpenWindow(new EditAccountViewModel(_apiHelper, _eventAggregator));
+        }
+
+        private void RenameCanvas(CanvasDisplayModel canvas)
+        {
+            OpenWindow(new EditCanvasViewModel(_checkListEndpoint, canvas));
         }
 
         private void OpenWindow(ObservableObject viewModel)

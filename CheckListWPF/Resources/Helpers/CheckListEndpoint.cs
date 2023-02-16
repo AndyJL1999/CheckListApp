@@ -86,7 +86,7 @@ namespace CheckListWPF.Resources.Helpers
             }
         }
 
-        public async Task AddTaskBoardToCanvas(string title, int canvasId)
+        public async Task<int> AddTaskBoardToCanvas(string title, int canvasId)
         {
             var newCanvas = new AddTaskBoardDto
             {
@@ -100,7 +100,8 @@ namespace CheckListWPF.Resources.Helpers
             {
                 if (response.IsSuccessStatusCode)
                 {
-
+                    var result = await response.Content.ReadFromJsonAsync<int>();
+                    return result;
                 }
                 else
                 {
@@ -109,7 +110,7 @@ namespace CheckListWPF.Resources.Helpers
             }
         }
 
-        public async Task AddTaskToBoard(string title, string description, int boardId)
+        public async Task<int> AddTaskToBoard(string title, string description, int boardId)
         {
             var newCanvas = new AddTaskDto
             {
@@ -124,6 +125,30 @@ namespace CheckListWPF.Resources.Helpers
             var content = JsonContent.Create(newCanvas);
 
             using (HttpResponseMessage response = await _apiHelper.ApiClient.PostAsync(_apiHelper.ApiClient.BaseAddress + "CheckList/AddTask", content))
+            {
+                if (response.IsSuccessStatusCode)
+                {
+                    var result = await response.Content.ReadFromJsonAsync<int>();
+                    return result;
+                }
+                else
+                {
+                    throw new Exception(response.ReasonPhrase);
+                }
+            }
+        }
+
+        public async Task UpdateCanvas(int canvasId, string newTitle)
+        {
+            var newBoard = new UpdateCanvasDto
+            {
+                Id = canvasId,
+                Title = newTitle
+            };
+
+            var content = JsonContent.Create(newBoard);
+
+            using (HttpResponseMessage response = await _apiHelper.ApiClient.PutAsync(_apiHelper.ApiClient.BaseAddress + $"CheckList/UpdateCanvas", content))
             {
                 if (response.IsSuccessStatusCode)
                 {

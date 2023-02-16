@@ -1,7 +1,6 @@
-﻿using CheckListWPF.Resources;
-using CheckListWPF.Resources.EventAggregators;
+﻿using CheckListWPF.MVVM.Model;
 using CheckListWPF.Resources.Interfaces;
-using Prism.Events;
+using CheckListWPF.Resources;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,31 +8,28 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows;
-using CheckListWPF.MVVM.Model;
 
 namespace CheckListWPF.MVVM.ViewModel.ActionViewModels
 {
-    public class CreateTaskBoardViewModel : ActionViewModel
+    public class EditCanvasViewModel : ActionViewModel
     {
         #region ----------Fields----------
         private readonly ICheckListEndpoint _checkListEndpoint;
-        private readonly IEventAggregator _eventAggregator;
-        private ICommand _createTaskBoardCommand;
+        private readonly CanvasDisplayModel _canvas;
+        private ICommand _editCanvasCommand;
         private string _title;
         #endregion
 
-        public CreateTaskBoardViewModel(ICheckListEndpoint checkListEndpoint, IEventAggregator eventAggregator, int canvasId)
+        public EditCanvasViewModel(ICheckListEndpoint checkListEndpoint, CanvasDisplayModel canvas)
         {
             _checkListEndpoint = checkListEndpoint;
-            _eventAggregator = eventAggregator;
+            _canvas = canvas;
 
+            Title = _canvas.Title;
             ErrorVisibility = Visibility.Collapsed;
-            CanvasId = canvasId;
         }
 
         #region ----------Properties----------
-        public int CanvasId { get; set; }
-
         public string Title
         {
             get { return _title; }
@@ -44,37 +40,30 @@ namespace CheckListWPF.MVVM.ViewModel.ActionViewModels
             }
         }
 
-        public ICommand CreateTaskBoardCommand
+        public ICommand EditCanvasCommand
         {
             get
             {
-                if (_createTaskBoardCommand is null)
+                if (_editCanvasCommand is null)
                 {
-                    _createTaskBoardCommand = new RelayCommand(p => CreateNewTaskBoard(), p => true);
+                    _editCanvasCommand = new RelayCommand(p => EditCanvas(), p => true);
                 }
 
-                return _createTaskBoardCommand;
+                return _editCanvasCommand;
             }
-
         }
         #endregion
 
         #region ----------Methods----------
-        private async void CreateNewTaskBoard()
+        private async void EditCanvas()
         {
             if (string.IsNullOrEmpty(Title) == false && Title.Length <= 25)
             {
                 ErrorVisibility = Visibility.Collapsed;
 
-                var boardId = await _checkListEndpoint.AddTaskBoardToCanvas(Title, CanvasId);
+                await _checkListEndpoint.UpdateCanvas(_canvas.Id, Title);
 
-                _eventAggregator.GetEvent<AddTaskBoardEvent>().Publish(new TaskBoardDisplayModel
-                {
-                    Id = boardId,
-                    Title = Title,
-                    CanvasId = CanvasId,
-                    Tasks = new List<TaskDisplayModel>()
-                });
+                _canvas.Title = Title;
 
                 CloseWindow();
             }

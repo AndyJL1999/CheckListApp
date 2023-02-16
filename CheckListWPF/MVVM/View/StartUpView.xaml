@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:CheckListWPF.MVVM.View"
+             xmlns:fa="http://schemas.fontawesome.io/icons/"
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="800">
     
@@ -81,6 +82,7 @@
                             Height="35" Width="85"
                             HorizontalAlignment="Center"
                             VerticalAlignment="Center"
+                            IsEnabled="{Binding EnableButton}"
                             Command="{Binding GoToAccountCommand}"/>
 
                     <Button Foreground="DodgerBlue" Background="Transparent"
@@ -96,6 +98,11 @@
 
                     </Button>
 
+                    <fa:ImageAwesome Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="1" 
+                                     Icon="CircleOutlineNotch" Spin="True" Foreground="AliceBlue"
+                                     Height="48" Width="48" Margin="0,50,0,0"
+                                     Visibility="{Binding SpinnerVisibility}"/>
+
                 </StackPanel>
                 
             </StackPanel>
@@ -105,7 +112,8 @@
         <Border Grid.Row="1" Grid.RowSpan="2" Grid.Column="1" 
                 Grid.ColumnSpan="2" BorderBrush="#CFCFCF" 
                 BorderThickness="1" Margin="5" CornerRadius="20"
-                Visibility="{Binding LoginVisibility}">
+                Visibility="{Binding LoginVisibility}"
+                d:Visibility="Visible">
 
             <StackPanel>
 
@@ -145,6 +153,7 @@
                             Height="35" Width="85"
                             HorizontalAlignment="Center"
                             VerticalAlignment="Center"
+                            IsEnabled="{Binding EnableButton}"
                             Command="{Binding GoToAccountCommand}"/>
 
                     <Button Foreground="DodgerBlue" Background="Transparent"
@@ -152,13 +161,18 @@
                             HorizontalAlignment="Center"
                             BorderThickness="0"
                             Command="{Binding ShowHiddenFormCommand}">
-                        
+
                         <Button.Content>
                             <TextBlock Text="Sign Up"
                                        TextDecorations="Underline"/>
                         </Button.Content>
-                        
+
                     </Button>
+
+                    <fa:ImageAwesome Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="2" 
+                                     Icon="CircleOutlineNotch" Spin="True" Foreground="AliceBlue"
+                                     Height="48" Width="48" Margin="0,50,0,0"
+                                     Visibility="{Binding SpinnerVisibility}"/>
 
                 </StackPanel>
 
