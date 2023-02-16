@@ -14,6 +14,7 @@ namespace CheckListWPF.MVVM.ViewModel.ActionViewModels
 {
     public class EditTaskViewModel : ActionViewModel
     {
+        #region ----------Fields----------
         private readonly ICheckListEndpoint _checkListEndpoint;
         private readonly TaskDisplayModel _task;
         private string _title;
@@ -25,7 +26,7 @@ namespace CheckListWPF.MVVM.ViewModel.ActionViewModels
         private ICommand _checkDoneCommand;
         private ICommand _checkInProgressCommand;
         private ICommand _checkNotStartedCommand;
-        
+        #endregion
 
         public EditTaskViewModel(ICheckListEndpoint checkListEndpoint, TaskDisplayModel task)
         {
@@ -37,8 +38,11 @@ namespace CheckListWPF.MVVM.ViewModel.ActionViewModels
             NotStarted = task.NotStarted;
             InProgress = task.InProgress;
             IsDone = task.IsDone;
+
+            ErrorVisibility = Visibility.Collapsed;
         }
 
+        #region ----------Properties----------
         public string Title
         {
             get { return _title; }
@@ -156,7 +160,9 @@ namespace CheckListWPF.MVVM.ViewModel.ActionViewModels
                 return _checkNotStartedCommand;
             }
         }
+        #endregion
 
+        #region ----------Methods----------
         private async void EditTask()
         {
             if (string.IsNullOrEmpty(Title) == false && Title.Length <= 25)
@@ -179,5 +185,6 @@ namespace CheckListWPF.MVVM.ViewModel.ActionViewModels
                 ErrorVisibility = Visibility.Visible;
             }
         }
+        #endregion
     }
 }

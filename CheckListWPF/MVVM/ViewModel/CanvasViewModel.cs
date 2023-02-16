@@ -21,6 +21,7 @@ namespace CheckListWPF.MVVM.ViewModel
 {
     public class CanvasViewModel : ObservableObject, IPageViewModel
     {
+        #region ----------Fields----------
         private ICommand _openAccountCommand;
         private ICommand _openAddTaskBoardCommand;
         private ICommand _openAddTaskCommand;
@@ -34,6 +35,7 @@ namespace CheckListWPF.MVVM.ViewModel
         private string _canvasTitle;
         private ObservableCollection<TaskBoardDisplayModel> _taskBoards;
         private ICommand _editTaskCommand;
+        #endregion
 
         public event EventHandler<EventArgs<string>>? ViewChanged;
 
@@ -75,6 +77,7 @@ namespace CheckListWPF.MVVM.ViewModel
             });
         }
 
+        #region ----------Properties----------
         public string PageId { get; set; }
         public string PageName { get; set; }
         public int CanvasId { get; set; }
@@ -207,7 +210,9 @@ namespace CheckListWPF.MVVM.ViewModel
                 OnPropertyChanged(nameof(EditVisibility));
             } 
         }
+        #endregion
 
+        #region ----------Methods----------
         private void OpenAddTaskBoard()
         {
             OpenWindow(new CreateTaskBoardViewModel(_checkListEndpoint, _eventAggregator, CanvasId));
@@ -280,5 +285,6 @@ namespace CheckListWPF.MVVM.ViewModel
         {
             OpenWindow(new EditTaskViewModel(_checkListEndpoint, task));
         }
+        #endregion
     }
 }

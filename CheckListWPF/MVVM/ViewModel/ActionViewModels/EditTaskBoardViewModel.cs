@@ -15,10 +15,12 @@ namespace CheckListWPF.MVVM.ViewModel.ActionViewModels
 {
     public class EditTaskBoardViewModel : ActionViewModel
     {
+        #region ----------Fields----------
         private readonly ICheckListEndpoint _checkListEndpoint;
         private ICommand _editBoardCommand;
         private readonly TaskBoardDisplayModel _taskBoard;
         private string _title;
+        #endregion
 
         public EditTaskBoardViewModel(ICheckListEndpoint checkListEndpoint, TaskBoardDisplayModel taskBoard)
         {
@@ -26,8 +28,10 @@ namespace CheckListWPF.MVVM.ViewModel.ActionViewModels
             _taskBoard = taskBoard;
 
             Title = _taskBoard.Title;
+            ErrorVisibility = Visibility.Collapsed;
         }
 
+        #region ----------Properties----------
         public string Title
         {
             get { return _title; }
@@ -50,7 +54,9 @@ namespace CheckListWPF.MVVM.ViewModel.ActionViewModels
                 return _editBoardCommand;
             }
         }
+        #endregion
 
+        #region ----------Methods----------
         private async void EditTaskBoard()
         {
             if (string.IsNullOrEmpty(Title) == false && Title.Length <= 25)
@@ -69,5 +75,6 @@ namespace CheckListWPF.MVVM.ViewModel.ActionViewModels
                 ErrorVisibility = Visibility.Visible;
             }
         }
+        #endregion
     }
 }

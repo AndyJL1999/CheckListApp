@@ -14,10 +14,12 @@ namespace CheckListWPF.MVVM.ViewModel.ActionViewModels
 {
     public class CreateCanvasViewModel : ActionViewModel
     {
+        #region ----------Fields----------
         private readonly ICheckListEndpoint _checkListEndpoint;
         private readonly IEventAggregator _eventAggregator;
         private ICommand _createCanvasCommand;
         private string _title;
+        #endregion
 
         public CreateCanvasViewModel(ICheckListEndpoint checkListEndpoint, IEventAggregator eventAggregator)
         {
@@ -27,6 +29,7 @@ namespace CheckListWPF.MVVM.ViewModel.ActionViewModels
             ErrorVisibility = Visibility.Collapsed;
         }
 
+        #region ----------Properties----------
         public string Title
         {
             get { return _title; }
@@ -50,7 +53,9 @@ namespace CheckListWPF.MVVM.ViewModel.ActionViewModels
             }
 
         }
+        #endregion
 
+        #region ----------Methods----------
         public async void CreateNewCanvas()
         {
             if (string.IsNullOrEmpty(Title) == false && Title.Length <= 25)
@@ -68,5 +73,6 @@ namespace CheckListWPF.MVVM.ViewModel.ActionViewModels
                 ErrorVisibility = Visibility.Visible;
             }
         }
+        #endregion
     }
 }

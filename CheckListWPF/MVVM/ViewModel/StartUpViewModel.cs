@@ -16,6 +16,7 @@ namespace CheckListWPF.MVVM.ViewModel
 {
     public class StartUpViewModel : ObservableObject, IPageViewModel
     {
+        #region ----------Fields----------
         private string _username;
         private string _email;
         private string _password;
@@ -28,6 +29,7 @@ namespace CheckListWPF.MVVM.ViewModel
         private SolidColorBrush _resultColor;
         private readonly IApiHelper _apiHelper;
         private readonly IEventAggregator _eventAggregator;
+        #endregion
 
         public event EventHandler<EventArgs<string>>? ViewChanged;
 
@@ -49,6 +51,7 @@ namespace CheckListWPF.MVVM.ViewModel
             Password = string.Empty;
         }
 
+        #region ----------Properties----------
         public string PageId { get; set; }
         public string PageName { get; set; }
 
@@ -162,7 +165,10 @@ namespace CheckListWPF.MVVM.ViewModel
                 return _goToAccountCommand;
             }
         }
+        #endregion
 
+        #region ----------Methods----------
+        //TODO - make it so the button can't be pressed a second time during api call
         private async Task ChangeView()
         {
             try
@@ -236,6 +242,7 @@ namespace CheckListWPF.MVVM.ViewModel
             }
 
         }
+        #endregion
 
     }
 }

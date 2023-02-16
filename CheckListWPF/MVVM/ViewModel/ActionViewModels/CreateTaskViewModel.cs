@@ -15,12 +15,13 @@ namespace CheckListWPF.MVVM.ViewModel.ActionViewModels
 {
     public class CreateTaskViewModel : ActionViewModel
     {
-        
+        #region ----------Fields----------
         private readonly ICheckListEndpoint _checkListEndpoint;
         private readonly IEventAggregator _eventAggregator;
         private ICommand _createTaskCommand;
         private string _title;
         private string _description;
+        #endregion
 
         public CreateTaskViewModel(ICheckListEndpoint checkListEndpoint, IEventAggregator eventAggregator, int boardId)
         {
@@ -31,6 +32,7 @@ namespace CheckListWPF.MVVM.ViewModel.ActionViewModels
             BoardId = boardId;
         }
 
+        #region ----------Properties----------
         public int BoardId { get; set; }
 
         public string Title
@@ -66,7 +68,9 @@ namespace CheckListWPF.MVVM.ViewModel.ActionViewModels
             }
 
         }
+        #endregion
 
+        #region ----------Methods----------
         public async void CreateNewTask()
         {
             if (string.IsNullOrEmpty(Title) == false && Title.Length <= 25)
@@ -93,5 +97,6 @@ namespace CheckListWPF.MVVM.ViewModel.ActionViewModels
                 ErrorVisibility = Visibility.Visible;
             }
         }
+        #endregion
     }
 }

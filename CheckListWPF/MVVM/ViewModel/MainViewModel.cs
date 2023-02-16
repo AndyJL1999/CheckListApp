@@ -13,12 +13,14 @@ namespace CheckListWPF.MVVM.ViewModel
 {
     public class MainViewModel : ObservableObject
     {
+        #region ----------Fields----------
         private IPageViewModel _viewModel;
         private readonly IApiHelper _apiHelper;
         private ICheckListEndpoint _checkListEndpoint;
         private IMapper _mapper;
         private readonly IEventAggregator _eventAggregator;
         private readonly Dictionary<string, IPageViewModel> _pageViewModels = new();
+        #endregion
 
         public MainViewModel(IDataModel pageViews, IApiHelper apiHelper, ICheckListEndpoint checkListEndpoint,
             IMapper mapper, IEventAggregator eventAggregator)
@@ -33,7 +35,7 @@ namespace CheckListWPF.MVVM.ViewModel
 
         }
 
-
+        #region ----------Properties----------
         public IPageViewModel ViewModel 
         {
             get { return _viewModel; }
@@ -43,8 +45,9 @@ namespace CheckListWPF.MVVM.ViewModel
                 OnPropertyChanged(nameof(ViewModel));
             }
         }
+        #endregion
 
-
+        #region ----------Methods----------
         private void SetNavigation(IDataModel pageViews)
         {
             _pageViewModels["0"] = new StartUpViewModel(_apiHelper, _eventAggregator);
@@ -70,6 +73,6 @@ namespace CheckListWPF.MVVM.ViewModel
 
             ViewModel = _pageViewModels["0"];
         }
-
+        #endregion
     }
 }

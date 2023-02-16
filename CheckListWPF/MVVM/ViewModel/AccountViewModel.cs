@@ -20,6 +20,7 @@ namespace CheckListWPF.MVVM.ViewModel
 {
     public class AccountViewModel : ObservableObject, IPageViewModel
     {
+        #region ----------Fields----------
         private ICommand _openEditCommand;
         private ICommand _openAddCanvasCommand;
         private ICommand _goToStartUpCommand;
@@ -30,6 +31,7 @@ namespace CheckListWPF.MVVM.ViewModel
         private readonly IMapper _mapper;
         private readonly IEventAggregator _eventAggregator;
         private string _userWelcome;
+        #endregion
 
         public event EventHandler<EventArgs<string>>? ViewChanged;
 
@@ -58,6 +60,7 @@ namespace CheckListWPF.MVVM.ViewModel
             });
         }
 
+        #region ----------Properties----------
         public string PageId { get; set; }
         public string PageName { get; set; }
 
@@ -148,7 +151,9 @@ namespace CheckListWPF.MVVM.ViewModel
                 return _goToStartUpCommand;
             }
         }
+        #endregion
 
+        #region ----------Methods----------
         private void OpenAddCanvas()
         {
             OpenWindow(new CreateCanvasViewModel(_checkListEndpoint, _eventAggregator));
@@ -156,7 +161,7 @@ namespace CheckListWPF.MVVM.ViewModel
 
         private void OpenEditAccount()
         {
-            OpenWindow(new EditAccountViewModel());
+            OpenWindow(new EditAccountViewModel(_apiHelper));
         }
 
         private void OpenWindow(ObservableObject viewModel)
@@ -182,5 +187,6 @@ namespace CheckListWPF.MVVM.ViewModel
 
             CanvasList = new ObservableCollection<CanvasDisplayModel>(canvasList);
         }
+        #endregion
     }
 }
