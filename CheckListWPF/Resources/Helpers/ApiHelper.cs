@@ -18,6 +18,7 @@ namespace CheckListWPF.Resources.Helpers
     {
         private HttpClient _apiClient;
         private ILoggedInUser _loggedInUser;
+        private string _password;
 
         public ApiHelper(ILoggedInUser loggedInUser)
         {
@@ -61,6 +62,8 @@ namespace CheckListWPF.Resources.Helpers
                 if (response.IsSuccessStatusCode)
                 {
                     var result = await response.Content.ReadFromJsonAsync<AuthenticatedUser>();
+
+                    _password = password;
 
                     return result;
                 }
@@ -117,12 +120,12 @@ namespace CheckListWPF.Resources.Helpers
             }
         }
 
-        public async Task<string> UpdateUser(string username, string email, string password)
+        public async Task<string> UpdateUser(string username, string email)
         {
             var data = JsonContent.Create(new UpdateUserDto
             {
                 Username = username,
-                Password = password,
+                Password = _password,
                 Email = email
             });
 
@@ -137,6 +140,36 @@ namespace CheckListWPF.Resources.Helpers
                     throw new Exception(await response.Content.ReadAsStringAsync());
                 }
             }
+        }
+
+        public async Task<string> UpdatePassword(string oldPassword, string newPassword)
+        {
+            if (oldPassword == _password)
+            {
+                var data = JsonContent.Create(new UpdateUserDto
+                {
+                    Username = _loggedInUser.Username,
+                    Password = newPassword,
+                    Email = _loggedInUser.Email
+                });
+
+                using (HttpResponseMessage response = await _apiClient.PutAsync(_apiClient.BaseAddress + "User", data))
+                {
+                    if (response.IsSuccessStatusCode)
+                    {
+                        return await response.Content.ReadAsStringAsync();
+                    }
+                    else
+                    {
+                        throw new Exception(await response.Content.ReadAsStringAsync());
+                    }
+                }
+            }
+            else
+            {
+                throw new Exception("Incorrect Password");
+            }
+            
         }
     }
 }
