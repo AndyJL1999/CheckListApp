@@ -131,62 +131,56 @@ namespace CheckListApi.Data
         #region ----------DELETE Methods----------
         public async Task DeleteCanvas(int userId, int canvasId)
         {
-            var canvas = new Canvas
-            {
-                Id = canvasId,
-                UserId = userId
-            };
-
             var user = await _context.Users
                 .Include(u => u.Canvases)
-                .SingleOrDefaultAsync(u => u.Id == canvas.UserId);
+                .SingleOrDefaultAsync(u => u.Id == userId);
 
-            user.Canvases.Remove(canvas);
+            if(user != null)
+            {
+                var canvasToDelete = user.Canvases
+                .SingleOrDefault(c => c.Id == canvasId);
 
-            _context.Canvases.Remove(canvas);
-            await _context.SaveChangesAsync();
+                user.Canvases.Remove(canvasToDelete);
+
+                _context.Canvases.Remove(canvasToDelete);
+                await _context.SaveChangesAsync();
+            }
         }
 
         public async Task DeleteTaskBoard(int canvasId, int boardId)
         {
-            var taskBoard = new TaskBoard
-            {
-                Id = boardId,
-                CanvasId = canvasId
-            };
-
             var canvas = await _context.Canvases
-                .Include(u => u.TaskBoards)
-                .SingleOrDefaultAsync(u => u.Id == taskBoard.CanvasId);
+                .Include(c => c.TaskBoards)
+                .SingleOrDefaultAsync(c => c.Id == canvasId);
 
-            var boardToDelete = canvas.TaskBoards
-                .SingleOrDefault(t => t.Id == taskBoard.Id);
+            if(canvas != null)
+            {
+                var boardToDelete = canvas.TaskBoards
+                .SingleOrDefault(t => t.Id == boardId);
 
-            canvas.TaskBoards.Remove(boardToDelete);
+                canvas.TaskBoards.Remove(boardToDelete);
 
-            _context.TaskBoards.Remove(boardToDelete);
-            await _context.SaveChangesAsync();
+                _context.TaskBoards.Remove(boardToDelete);
+                await _context.SaveChangesAsync();
+            }
         }
 
         public async Task DeleteTask(int boardId, int taskId)
         {
-            var task = new MyTask
-            {
-                Id = taskId,
-                BoardId = boardId
-            };
-
             var board = await _context.TaskBoards
-                .Include(u => u.Tasks)
-                .SingleOrDefaultAsync(u => u.Id == task.BoardId);
+                .Include(t => t.Tasks)
+                .SingleOrDefaultAsync(t => t.Id == boardId);
 
-            var taskToDelete = board.Tasks
-                .SingleOrDefault(t => t.Id == task.Id);
+            if(board != null)
+            {
+                var taskToDelete = board.Tasks
+                .SingleOrDefault(t => t.Id == taskId);
 
-            board.Tasks.Remove(taskToDelete);
+                board.Tasks.Remove(taskToDelete);
 
-            _context.Tasks.Remove(taskToDelete);
-            await _context.SaveChangesAsync();
+                _context.Tasks.Remove(taskToDelete);
+                await _context.SaveChangesAsync();
+            }
         }
         #endregion
     }
