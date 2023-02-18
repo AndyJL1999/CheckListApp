@@ -18,6 +18,7 @@ namespace CheckListWPF.Resources.Interfaces
         Task UpdateCanvas(int canvasId, string newTitle);
         Task UpdateBoard(int boardId, string newTitle);
         Task UpdateTask(TaskDisplayModel task);
+        Task DeleteCanvas(int canvasId);
         Task DeleteBoardFromCanvas(int canvasId, int boardId);
         Task DeleteTaskFromBoard(int boardId, int taskId);
     }

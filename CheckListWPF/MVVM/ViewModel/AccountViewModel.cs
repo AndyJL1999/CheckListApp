@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using CheckListApi.Models;
 using CheckListWPF.MVVM.Model;
 using CheckListWPF.MVVM.ViewModel.ActionViewModels;
 using CheckListWPF.Resources;
@@ -24,6 +25,7 @@ namespace CheckListWPF.MVVM.ViewModel
         private ICommand _openEditCommand;
         private ICommand _openAddCanvasCommand;
         private ICommand _renameCanvasCommand;
+        private ICommand _deleteCanvasCommand;
         private ICommand _goToStartUpCommand;
         private ObservableCollection<CanvasDisplayModel> _canvasList;
         private CanvasDisplayModel _selectedCanvas;
@@ -161,6 +163,19 @@ namespace CheckListWPF.MVVM.ViewModel
             }
         }
 
+        public ICommand DeleteCanvasCommand
+        {
+            get
+            {
+                if (_deleteCanvasCommand is null)
+                {
+                    _deleteCanvasCommand = new RelayCommand(p => DeleteCanvas((CanvasDisplayModel)p), p => true);
+                }
+
+                return _deleteCanvasCommand;
+            }
+        }
+
         public ICommand GoToStartUpCommand
         {
             get
@@ -198,6 +213,15 @@ namespace CheckListWPF.MVVM.ViewModel
         private void RenameCanvas(CanvasDisplayModel canvas)
         {
             OpenWindow(new EditCanvasViewModel(_checkListEndpoint, canvas));
+        }
+
+        private async void DeleteCanvas(CanvasDisplayModel canvas)
+        {
+            if (canvas != null)
+            {
+                await _checkListEndpoint.DeleteCanvas(canvas.Id);
+                CanvasList.Remove(canvas);
+            }
         }
 
         private void OpenWindow(ObservableObject viewModel)

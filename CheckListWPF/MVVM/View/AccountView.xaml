@@ -123,10 +123,17 @@
                     <uc:CanvasControl Canvas="{Binding}">
                         <uc:CanvasControl.ContextMenu>
                             <ContextMenu>
+                                
                                 <MenuItem Header="Rename Canvas"
                                           Command="{Binding Source={x:Reference Name=AccountParentControl},
                                           Path=DataContext.RenameCanvasCommand}"
                                           CommandParameter="{Binding}"/>
+                                
+                                <MenuItem Header="Delete Canvas"
+                                          Command="{Binding Source={x:Reference Name=AccountParentControl},
+                                          Path=DataContext.DeleteCanvasCommand}"
+                                          CommandParameter="{Binding}"/>
+                                
                             </ContextMenu>
                         </uc:CanvasControl.ContextMenu>
                     </uc:CanvasControl>

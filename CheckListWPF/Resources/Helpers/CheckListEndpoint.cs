@@ -211,6 +211,21 @@ namespace CheckListWPF.Resources.Helpers
             }
         }
 
+        public async Task DeleteCanvas(int canvasId)
+        {
+            using (HttpResponseMessage response = await _apiHelper.ApiClient.DeleteAsync(_apiHelper.ApiClient.BaseAddress + $"CheckList/DeleteCanvas/{canvasId}"))
+            {
+                if (response.IsSuccessStatusCode)
+                {
+
+                }
+                else
+                {
+                    throw new Exception(response.ReasonPhrase);
+                }
+            }
+        }
+
         public async Task DeleteBoardFromCanvas(int canvasId, int boardId)
         {
             using (HttpResponseMessage response = await _apiHelper.ApiClient.DeleteAsync(_apiHelper.ApiClient.BaseAddress + $"CheckList/DeleteTaskBoard/{canvasId}/{boardId}"))
