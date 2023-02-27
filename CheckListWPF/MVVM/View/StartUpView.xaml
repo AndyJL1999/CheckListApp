@@ -66,8 +66,9 @@
                                HorizontalAlignment="Left"
                                VerticalAlignment="Center"
                                FontFamily="Impact" Foreground="White"/>
-                    <TextBox Text="{Binding Password}"
-                             Margin="5,0" Height="25" FontSize="16"/>
+                    <PasswordBox PasswordChanged="PasswordBox_PasswordChanged"
+                                 VerticalContentAlignment="Center"
+                                 Margin="5" Height="25"/>
 
                     <TextBlock Text="Email" 
                                FontSize="24" Margin="5"
@@ -145,8 +146,9 @@
                                HorizontalAlignment="Left"
                                VerticalAlignment="Center"
                                FontFamily="Impact" Foreground="White"/>
-                    <TextBox Text="{Binding Password}"
-                             Margin="5,0" Height="25" FontSize="16"/>
+                    <PasswordBox PasswordChanged="PasswordBox_PasswordChanged"
+                                 VerticalContentAlignment="Center"
+                                 Margin="5" Height="25"/>
 
                     <Button Content="Login"
                             Margin="15" FontSize="21"

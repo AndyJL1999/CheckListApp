@@ -90,15 +90,7 @@ namespace CheckListWPF.MVVM.ViewModel
             }
         }
 
-        public string Password 
-        {
-            get { return _password; }
-            set
-            {
-                _password = value;
-                OnPropertyChanged(nameof(Password));
-            }
-        }
+        public string Password { private get; set; }
 
         public bool IsErrorVisible
         {
