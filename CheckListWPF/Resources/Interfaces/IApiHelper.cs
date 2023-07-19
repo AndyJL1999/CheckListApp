@@ -13,7 +13,7 @@ namespace CheckListWPF.Resources.Interfaces
         Task<AuthenticatedUser> Authenticate(string email, string password);
         Task<string> Register(string username, string password, string email);
         Task GetUserInfo(string token);
-        Task<string> UpdateUser(string username, string email);
+        Task<string> UpdateUser(string username, string email, string backgroundColor);
         Task<string> UpdatePassword(string oldPassword, string newPassword);
         ILoggedInUser LoggedInUser { get; set; }
         HttpClient ApiClient { get; }

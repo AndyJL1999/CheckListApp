@@ -30,6 +30,7 @@ namespace CheckListWPF.MVVM.ViewModel
         private ICommand _deleteTaskCommand;
         private Visibility _editVisibility;
         private Visibility _spinnerVisibility;
+        private readonly IApiHelper _apiHelper;
         private readonly ICheckListEndpoint _checkListEndpoint;
         private readonly IMapper _mapper;
         private readonly IEventAggregator _eventAggregator;
@@ -40,8 +41,9 @@ namespace CheckListWPF.MVVM.ViewModel
 
         public event EventHandler<EventArgs<string>>? ViewChanged;
 
-        public CanvasViewModel(ICheckListEndpoint checkListEndpoint, IMapper mapper, IEventAggregator eventAggregator, string pageIndex = "2")
+        public CanvasViewModel(IApiHelper apiHelper, ICheckListEndpoint checkListEndpoint, IMapper mapper, IEventAggregator eventAggregator, string pageIndex = "2")
         {
+            _apiHelper = apiHelper;
             _checkListEndpoint = checkListEndpoint;
             _mapper = mapper;
             _eventAggregator = eventAggregator;
@@ -55,6 +57,8 @@ namespace CheckListWPF.MVVM.ViewModel
             {
                 CanvasId = c.Id;
                 CanvasTitle = c.Title;
+                BackgroundColor = _apiHelper.LoggedInUser.BackgroundColor;
+
                 SetTaskBoardList();
             });
 

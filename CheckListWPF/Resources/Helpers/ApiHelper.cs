@@ -110,6 +110,7 @@ namespace CheckListWPF.Resources.Helpers
                     var result = await response.Content.ReadFromJsonAsync<LoggedInUser>();
                     _loggedInUser.Username = result.Username;
                     _loggedInUser.Email = result.Email;
+                    _loggedInUser.BackgroundColor = result.BackgroundColor;
                     _loggedInUser.Id = result.Id;
                     _loggedInUser.Token = token;
                 }
@@ -120,13 +121,14 @@ namespace CheckListWPF.Resources.Helpers
             }
         }
 
-        public async Task<string> UpdateUser(string username, string email)
+        public async Task<string> UpdateUser(string username, string email, string backgroundColor)
         {
             var data = JsonContent.Create(new UpdateUserDto
             {
                 Username = username,
                 Password = _password,
-                Email = email
+                Email = email,
+                BackgroundColor = backgroundColor
             });
 
             using (HttpResponseMessage response = await _apiClient.PutAsync(_apiClient.BaseAddress + "User", data))
@@ -135,6 +137,8 @@ namespace CheckListWPF.Resources.Helpers
                 {
                     _loggedInUser.Username = username;
                     _loggedInUser.Email = email;
+                    _loggedInUser.BackgroundColor = backgroundColor;
+
                     return await response.Content.ReadAsStringAsync();
                 }
                 else
@@ -152,7 +156,8 @@ namespace CheckListWPF.Resources.Helpers
                 {
                     Username = _loggedInUser.Username,
                     Password = newPassword,
-                    Email = _loggedInUser.Email
+                    Email = _loggedInUser.Email,
+                    BackgroundColor = _loggedInUser.BackgroundColor
                 });
 
                 using (HttpResponseMessage response = await _apiClient.PutAsync(_apiClient.BaseAddress + "User", data))

@@ -48,7 +48,12 @@
                            FontFamily="Impact" Foreground="White"/>
                 <TextBox Text="{Binding Email,
                          Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                
+
+                <TextBlock Text="Canvas Color" FontSize="14"
+                           FontFamily="Impact" Foreground="White"/>
+                <ComboBox ItemsSource="{Binding BackgroundColors}"
+                          SelectedValue="{Binding SelectedColor, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+
 
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                     

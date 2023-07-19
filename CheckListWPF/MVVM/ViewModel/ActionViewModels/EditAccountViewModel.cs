@@ -7,6 +7,7 @@ using Prism.Events;
 using System;
 using System.CodeDom;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -30,6 +31,8 @@ namespace CheckListWPF.MVVM.ViewModel.ActionViewModels
         private string _newPassword;
         private string _confirmPassword;
         private bool _onEditAccountView;
+        private ObservableCollection<string> _backgroundColors;
+        private string _selectedColor;
         #endregion
 
         public EditAccountViewModel(IApiHelper apiHelper, IEventAggregator eventAggregator)
@@ -44,9 +47,37 @@ namespace CheckListWPF.MVVM.ViewModel.ActionViewModels
 
             Username = _apiHelper.LoggedInUser.Username;
             Email = _apiHelper.LoggedInUser.Email;
+
+            BackgroundColors = new ObservableCollection<string>
+            {
+                "Red",
+                "CadetBlue",
+                "Purple",
+                "Blue"
+            };
         }
 
         #region ----------Properties----------
+        public ObservableCollection<string> BackgroundColors 
+        { 
+            get { return _backgroundColors; }
+            set
+            {
+                _backgroundColors = value;
+                OnPropertyChanged(nameof(BackgroundColors));
+            }
+        }
+
+        public string SelectedColor 
+        { 
+            get { return _selectedColor; }
+            set
+            {
+                _selectedColor = value;
+                OnPropertyChanged(nameof(SelectedColor));
+            } 
+        }
+
         public string Username 
         {
             get { return _username; }
@@ -154,7 +185,9 @@ namespace CheckListWPF.MVVM.ViewModel.ActionViewModels
                 {
                     ErrorVisibility = Visibility.Collapsed;
 
-                    await _apiHelper.UpdateUser(Username, Email);
+                    await _apiHelper.UpdateUser(Username, Email, SelectedColor);
+
+                    _apiHelper.LoggedInUser.BackgroundColor = SelectedColor;
 
                     _eventAggregator.GetEvent<UpdateAccountEvent>().Publish() ;
 

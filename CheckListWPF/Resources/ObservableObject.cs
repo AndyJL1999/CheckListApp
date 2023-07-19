@@ -10,7 +10,19 @@ namespace CheckListWPF.Resources
 {
     public class ObservableObject : INotifyPropertyChanged
     {
+        private string _backgroundColor;
+
         public event PropertyChangedEventHandler? PropertyChanged;
+
+        public string BackgroundColor 
+        {
+            get { return _backgroundColor; }
+            set
+            {
+                _backgroundColor = value;
+                OnPropertyChanged(nameof(BackgroundColor));
+            }
+        }
 
         public void OnPropertyChanged([CallerMemberName]string propertyName = null)
         {

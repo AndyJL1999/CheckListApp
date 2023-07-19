@@ -23,7 +23,6 @@
             <RowDefinition Height="0.85*"/>
         </Grid.RowDefinitions>
 
-        <Rectangle Grid.ColumnSpan="4" Fill="CadetBlue" Opacity="1"/>
         <Rectangle Grid.ColumnSpan="4" Fill="Black" Opacity="0.3"/>
 
         <TextBlock Text="CheckList" Grid.Column="1" Grid.ColumnSpan="2"

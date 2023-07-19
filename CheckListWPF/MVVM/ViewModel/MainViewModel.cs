@@ -64,7 +64,7 @@ namespace CheckListWPF.MVVM.ViewModel
                 pageViews.Data = "Data: " + s.Value.ToString();
             };
 
-            _pageViewModels["2"] = new CanvasViewModel(_checkListEndpoint, _mapper, _eventAggregator);
+            _pageViewModels["2"] = new CanvasViewModel(_apiHelper, _checkListEndpoint, _mapper, _eventAggregator);
             _pageViewModels["2"].ViewChanged += (o, s) =>
             {
                 ViewModel = _pageViewModels[s.Value];

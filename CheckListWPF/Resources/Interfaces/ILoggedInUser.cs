@@ -12,5 +12,6 @@ namespace CheckListWPF.Resources.Interfaces
         string Email { get; set; }
         string Token { get; set; }
         string Username { get; set; }
+        public string BackgroundColor { get; set; }
     }
 }

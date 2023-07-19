@@ -54,6 +54,9 @@ namespace CheckListWPF.MVVM.ViewModel
 
                 _userWelcome = _apiHelper.LoggedInUser.Username;
                 _email = _apiHelper.LoggedInUser.Email;
+
+                BackgroundColor = _apiHelper.LoggedInUser.BackgroundColor;
+
                 SetCanvasList();
             });
 
@@ -68,6 +71,7 @@ namespace CheckListWPF.MVVM.ViewModel
             {
                 UserWelcome = _apiHelper.LoggedInUser.Username;
                 Email = _apiHelper.LoggedInUser.Email;
+                BackgroundColor = _apiHelper.LoggedInUser.BackgroundColor;
             });
         }
 
