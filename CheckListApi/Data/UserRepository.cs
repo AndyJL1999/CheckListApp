@@ -53,6 +53,7 @@ namespace CheckListApi.Data
             user.PasswordHash = passwordHash;
             user.PasswordSalt = passwordSalt;
             user.Email = userUpdate.Email;
+            user.BackgroundColor = userUpdate.BackgroundColor;
 
             await _context.SaveChangesAsync();
 

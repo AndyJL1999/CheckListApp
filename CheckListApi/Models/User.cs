@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace CheckListApi.Models
 {
@@ -14,6 +15,9 @@ namespace CheckListApi.Models
 
         public byte[] PasswordHash { get; set; }
         public byte[] PasswordSalt { get; set; }
+
+        [MaxLength(25)]
+        public string BackgroundColor { get; set; } = "CadetBlue";
 
         public List<Canvas>? Canvases { get; set; }
     }
