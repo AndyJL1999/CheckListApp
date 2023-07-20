@@ -28,6 +28,8 @@ namespace CheckListWPF.MVVM.ViewModel
         private ICommand _renameBoardCommand;
         private ICommand _deleteBoardCommand;
         private ICommand _deleteTaskCommand;
+        private ICommand _editTaskCommand;
+        private ICommand _changeTaskStatusCommand;
         private Visibility _editVisibility;
         private Visibility _spinnerVisibility;
         private readonly IApiHelper _apiHelper;
@@ -36,7 +38,6 @@ namespace CheckListWPF.MVVM.ViewModel
         private readonly IEventAggregator _eventAggregator;
         private string _canvasTitle;
         private ObservableCollection<TaskBoardDisplayModel> _taskBoards;
-        private ICommand _editTaskCommand;
         #endregion
 
         public event EventHandler<EventArgs<string>>? ViewChanged;
@@ -180,13 +181,26 @@ namespace CheckListWPF.MVVM.ViewModel
             }
         }
 
+        public ICommand ChangeTaskStatusCommand
+        {
+            get
+            {
+                if (_changeTaskStatusCommand is null)
+                {
+                    _changeTaskStatusCommand = new RelayCommand(async p => await ChangeTaskStatus((TaskDisplayModel)p), p => true);
+                }
+
+                return _changeTaskStatusCommand;
+            }
+        }
+
         public ICommand DeleteBoardCommand
         {
             get
             {
                 if(_deleteBoardCommand is null)
                 {
-                    _deleteBoardCommand = new RelayCommand(p => DeleteTaskBoard((TaskBoardDisplayModel)p), p => true);
+                    _deleteBoardCommand = new RelayCommand(async p => await DeleteTaskBoard((TaskBoardDisplayModel)p), p => true);
                 }
 
                 return _deleteBoardCommand;
@@ -199,7 +213,7 @@ namespace CheckListWPF.MVVM.ViewModel
             {
                 if (_deleteTaskCommand is null)
                 {
-                    _deleteTaskCommand = new RelayCommand(p => DeleteTask((TaskDisplayModel)p), p => true);
+                    _deleteTaskCommand = new RelayCommand(async p => await DeleteTask((TaskDisplayModel)p), p => true);
                 }
 
                 return _deleteTaskCommand;
@@ -238,7 +252,7 @@ namespace CheckListWPF.MVVM.ViewModel
             OpenWindow(new CreateTaskViewModel(_checkListEndpoint, _eventAggregator, boardId));
         }
 
-        private async void DeleteTaskBoard(TaskBoardDisplayModel taskBoard)
+        private async Task DeleteTaskBoard(TaskBoardDisplayModel taskBoard)
         {
             if (taskBoard != null)
             {
@@ -247,7 +261,7 @@ namespace CheckListWPF.MVVM.ViewModel
             }
         }
 
-        private async void DeleteTask(TaskDisplayModel task)
+        private async Task DeleteTask(TaskDisplayModel task)
         {
             var board = TaskBoards.FirstOrDefault(t => t.Id == task.BoardId);
 
@@ -279,7 +293,7 @@ namespace CheckListWPF.MVVM.ViewModel
             }
         }
 
-        private async void SetTaskBoardList()
+        private async Task SetTaskBoardList()
         {
             //If Taskboards is null -> call api for Canvas TaskBoard List
             if (TaskBoards == null)
@@ -305,6 +319,11 @@ namespace CheckListWPF.MVVM.ViewModel
         private void EditTask(TaskDisplayModel task)
         {
             OpenWindow(new EditTaskViewModel(_checkListEndpoint, task));
+        }
+
+        private async Task ChangeTaskStatus(TaskDisplayModel task)
+        {
+            await _checkListEndpoint.UpdateTask(task);
         }
         #endregion
     }

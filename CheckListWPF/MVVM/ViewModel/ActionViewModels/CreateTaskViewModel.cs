@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows;
 using CheckListWPF.MVVM.Model;
+using CheckListApi.Models;
 
 namespace CheckListWPF.MVVM.ViewModel.ActionViewModels
 {
@@ -87,9 +88,7 @@ namespace CheckListWPF.MVVM.ViewModel.ActionViewModels
                     Title = Title,
                     Description = Description,
                     BoardId = BoardId,
-                    NotStarted = true,
-                    InProgress = false,
-                    IsDone = false
+                    Status = StatusEnum.NotStarted
                 });
 
                 CloseWindow();

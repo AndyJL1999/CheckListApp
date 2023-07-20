@@ -90,6 +90,8 @@
                                                  RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type UserControl}}}"
                                                  EditTaskCommandProp="{Binding Path=DataContext.EditTaskCommand,
                                                  RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type UserControl}}}"
+                                                 ChangeTaskStatusCommandProp="{Binding Path=DataContext.ChangeTaskStatusCommand,
+                                                 RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type UserControl}}}"
                                                  DeleteCommandProp="{Binding Path=DataContext.DeleteBoardCommand,
                                                  RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type UserControl}}}"
                                                  DeleteTaskCommandProp="{Binding Path=DataContext.DeleteTaskCommand,

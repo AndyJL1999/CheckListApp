@@ -70,12 +70,12 @@ namespace CheckListWPF.MVVM.View.UserControls
 
         public ICommand DeleteTaskCommandProp
         {
-            get { return (ICommand)GetValue(DeleteTaskCommandPropProperty); }
-            set { SetValue(DeleteTaskCommandPropProperty, value); }
+            get { return (ICommand)GetValue(DeleteTaskCommandProperty); }
+            set { SetValue(DeleteTaskCommandProperty, value); }
         }
 
         // Using a DependencyProperty as the backing store for DeleteTaskCommandProp.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty DeleteTaskCommandPropProperty =
+        public static readonly DependencyProperty DeleteTaskCommandProperty =
             DependencyProperty.Register("DeleteTaskCommandProp", typeof(ICommand), typeof(TaskBoardControl), new PropertyMetadata(null));
 
 
@@ -83,13 +83,25 @@ namespace CheckListWPF.MVVM.View.UserControls
 
         public ICommand EditTaskCommandProp
         {
-            get { return (ICommand)GetValue(EditTaskCommandPropProperty); }
-            set { SetValue(EditTaskCommandPropProperty, value); }
+            get { return (ICommand)GetValue(EditTaskCommandProperty); }
+            set { SetValue(EditTaskCommandProperty, value); }
         }
 
         // Using a DependencyProperty as the backing store for EditTaskCommandProp.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty EditTaskCommandPropProperty =
+        public static readonly DependencyProperty EditTaskCommandProperty =
             DependencyProperty.Register("EditTaskCommandProp", typeof(ICommand), typeof(TaskBoardControl), new PropertyMetadata(null));
+
+
+
+        public ICommand ChangeTaskStatusCommandProp
+        {
+            get { return (ICommand)GetValue(ChangeTaskStatusCommandProperty); }
+            set { SetValue(ChangeTaskStatusCommandProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for EditTaskCommandProp.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty ChangeTaskStatusCommandProperty =
+            DependencyProperty.Register("ChangeTaskStatusCommandProp", typeof(ICommand), typeof(TaskBoardControl), new PropertyMetadata(null));
 
 
         private ICommand _collapseBoardCommand;

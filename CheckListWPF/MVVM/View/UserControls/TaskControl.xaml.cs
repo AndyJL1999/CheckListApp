@@ -23,6 +23,9 @@ namespace CheckListWPF.MVVM.View.UserControls
     /// </summary>
     public partial class TaskControl : UserControl
     {
+        private ICommand _changeStatusCommand;
+
+
         public TaskDisplayModel Task
         {
             get { return (TaskDisplayModel)GetValue(TaskProperty); }
@@ -35,27 +38,87 @@ namespace CheckListWPF.MVVM.View.UserControls
 
         private static void SetValues(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            TaskControl canvasCtrl = d as TaskControl;
-            if (canvasCtrl != null)
+            TaskControl taskCtrl = d as TaskControl;
+            if (taskCtrl != null)
             {
-                canvasCtrl.DataContext = canvasCtrl.Task;
+                taskCtrl.DataContext = taskCtrl.Task;
+                taskCtrl.CheckStatus(taskCtrl.Task);
             }
         }
 
 
         public ICommand DeleteTaskProp
         {
-            get { return (ICommand)GetValue(DeleteTaskPropProperty); }
-            set { SetValue(DeleteTaskPropProperty, value); }
+            get { return (ICommand)GetValue(DeleteTaskProperty); }
+            set { SetValue(DeleteTaskProperty, value); }
         }
 
         // Using a DependencyProperty as the backing store for DeleteTaskProp.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty DeleteTaskPropProperty =
+        public static readonly DependencyProperty DeleteTaskProperty =
             DependencyProperty.Register("DeleteTaskProp", typeof(ICommand), typeof(TaskControl), new PropertyMetadata(null));
+
+        public ICommand ChangeStatusProp
+        {
+            get { return (ICommand)GetValue(ChangeStatusProperty); }
+            set { SetValue(ChangeStatusProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for DeleteTaskProp.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty ChangeStatusProperty =
+            DependencyProperty.Register("ChangeStatusProp", typeof(ICommand), typeof(TaskControl), new PropertyMetadata(null));
 
         public TaskControl()
         {
             InitializeComponent();
+        }
+
+        public bool NotStarted { get; set; }
+        public bool InProgress { get; set; }
+        public bool IsDone { get; set; }
+
+        private void RadioButton_Click(object sender, RoutedEventArgs e)
+        {
+            var btn = sender as RadioButton;
+
+            if (btn.BorderBrush == Brushes.Red)
+            {
+                Task.Status = CheckListApi.Models.StatusEnum.NotStarted;
+            }
+            else if (btn.BorderBrush == Brushes.Orange)
+            {
+                Task.Status = CheckListApi.Models.StatusEnum.InProgress;
+            }
+            else if (btn.BorderBrush == Brushes.Green)
+            {
+                Task.Status = CheckListApi.Models.StatusEnum.IsDone;
+            }
+        }
+
+        private void CheckStatus(TaskDisplayModel task)
+        {
+            switch (task.Status)
+            {
+                case CheckListApi.Models.StatusEnum.NotStarted:
+                    NotStarted = true;
+                    InProgress = false;
+                    IsDone = false;
+                    break;
+                case CheckListApi.Models.StatusEnum.InProgress:
+                    InProgress = true;
+                    NotStarted = false;
+                    IsDone = false;
+                    break;
+                case CheckListApi.Models.StatusEnum.IsDone:
+                    IsDone = true;
+                    NotStarted = false;
+                    InProgress = false;
+                    break;
+                default:
+                    NotStarted = true;
+                    InProgress = false;
+                    IsDone = false;
+                    break;
+            }
         }
     }
 }

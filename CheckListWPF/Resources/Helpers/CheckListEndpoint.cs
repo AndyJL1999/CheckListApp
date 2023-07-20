@@ -116,10 +116,8 @@ namespace CheckListWPF.Resources.Helpers
             {
                 Title = title,
                 Description = description,
-                IsDone = false,
-                InProgress = false,
+                Status = StatusEnum.NotStarted,
                 BoardId = boardId,
-
             };
 
             var content = JsonContent.Create(newCanvas);
@@ -191,9 +189,7 @@ namespace CheckListWPF.Resources.Helpers
                 Id = task.Id,
                 Title = task.Title,
                 Description = task.Description,
-                NotStarted = task.NotStarted,
-                InProgress = task.InProgress,
-                IsDone = task.IsDone
+                Status = task.Status
             };
 
             var content = JsonContent.Create(newTask);

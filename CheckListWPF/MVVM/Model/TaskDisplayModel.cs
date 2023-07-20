@@ -14,9 +14,7 @@ namespace CheckListWPF.MVVM.Model
     {
         private string _title;
         private string _description;
-        private bool _notStarted;
-        private bool _inProgress;
-        private bool _isDone;
+        private StatusEnum _status;
         private TaskBoardDisplayModel _board;
 
         public int Id { get; set; }
@@ -48,33 +46,15 @@ namespace CheckListWPF.MVVM.Model
                 OnPropertyChanged(nameof(Description));
             }
         }
-        public bool NotStarted
+        public StatusEnum Status
         {
-            get { return _notStarted; }
+            get { return _status; }
             set
             {
-                _notStarted = value;
-                OnPropertyChanged(nameof(NotStarted));
+                _status = value;
+                OnPropertyChanged(nameof(Status));
             }
         }
-        public bool InProgress 
-        {
-            get { return _inProgress; }
-            set
-            {
-                _inProgress = value;
-                OnPropertyChanged(nameof(InProgress));
-            }
-        } 
-        public bool IsDone 
-        {
-            get { return _isDone; }
-            set
-            {
-                _isDone = value;
-                OnPropertyChanged(nameof(IsDone));
-            }
-        } 
 
     }
 }

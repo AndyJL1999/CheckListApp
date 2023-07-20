@@ -45,6 +45,8 @@
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <local:TaskControl Task="{Binding}"
+                                           ChangeStatusProp="{Binding Path=ChangeTaskStatusCommandProp,
+                                           RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:TaskBoardControl}}}"
                                            DeleteTaskProp="{Binding Path=DeleteTaskCommandProp,
                                            RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:TaskBoardControl}}}">
 

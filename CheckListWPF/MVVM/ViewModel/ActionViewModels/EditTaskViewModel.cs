@@ -19,9 +19,6 @@ namespace CheckListWPF.MVVM.ViewModel.ActionViewModels
         private readonly TaskDisplayModel _task;
         private string _title;
         private string _description;
-        private bool _notStarted;
-        private bool _inProgress;
-        private bool _isDone;
         private ICommand _editTaskCommand;
         private ICommand _checkDoneCommand;
         private ICommand _checkInProgressCommand;
@@ -35,9 +32,6 @@ namespace CheckListWPF.MVVM.ViewModel.ActionViewModels
 
             Title = task.Title;
             Description = task.Description;
-            NotStarted = task.NotStarted;
-            InProgress = task.InProgress;
-            IsDone = task.IsDone;
 
             ErrorVisibility = Visibility.Collapsed;
         }
@@ -63,36 +57,6 @@ namespace CheckListWPF.MVVM.ViewModel.ActionViewModels
             }
         }
 
-        public bool NotStarted
-        {
-            get { return _notStarted; }
-            set
-            {
-                _notStarted = value;
-                OnPropertyChanged(nameof(NotStarted));
-            }
-        }
-
-        public bool InProgress 
-        {
-            get { return _inProgress; }
-            set
-            {
-                _inProgress = value;
-                OnPropertyChanged(nameof(InProgress));
-            }
-        }
-
-        public bool IsDone 
-        {
-            get { return _isDone; }
-            set
-            {
-                _isDone = value;
-                OnPropertyChanged(nameof(IsDone));
-            }
-        }
-
 
         public ICommand EditTaskCommand
         {
@@ -106,60 +70,6 @@ namespace CheckListWPF.MVVM.ViewModel.ActionViewModels
                 return _editTaskCommand;
             }
         }
-
-        public ICommand CheckDoneCommand
-        {
-            get
-            {
-                if (_checkDoneCommand is null)
-                {
-                    _checkDoneCommand = new RelayCommand(p =>
-                    {
-                        IsDone = true;
-                        InProgress = false;
-                        NotStarted = false;
-                    }, p => true);
-                }
-
-                return _checkDoneCommand;
-            }
-        }
-
-        public ICommand CheckInProgressCommand
-        {
-            get
-            {
-                if (_checkInProgressCommand is null)
-                {
-                    _checkInProgressCommand = new RelayCommand(p =>
-                    {
-                        IsDone = false;
-                        InProgress = true;
-                        NotStarted = false;
-                    }, p => true);
-                }
-
-                return _checkInProgressCommand;
-            }
-        }
-
-        public ICommand CheckNotStartedCommand
-        {
-            get
-            {
-                if (_checkNotStartedCommand is null)
-                {
-                    _checkNotStartedCommand = new RelayCommand(p =>
-                    {
-                        IsDone = false;
-                        InProgress = false;
-                        NotStarted = true;
-                    }, p => true);
-                }
-
-                return _checkNotStartedCommand;
-            }
-        }
         #endregion
 
         #region ----------Methods----------
@@ -171,9 +81,6 @@ namespace CheckListWPF.MVVM.ViewModel.ActionViewModels
 
                 _task.Title = Title;
                 _task.Description = Description;
-                _task.NotStarted = NotStarted;
-                _task.InProgress = InProgress;
-                _task.IsDone = IsDone;
 
                 await _checkListEndpoint.UpdateTask(_task);
 
