@@ -17,8 +17,7 @@ namespace CheckListApi.Models
         [MaxLength(200)]
         public string Description { get; set; }
 
-        public bool NotStarted { get; set; } = true;
-        public bool InProgress { get; set; } = false;
-        public bool IsDone { get; set; } = false;
+        [Required]
+        public StatusEnum Status { get; set; } = StatusEnum.NotStarted;
     }
 }
